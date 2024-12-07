@@ -1,0 +1,7 @@
+{
+  "name": "UnderWraps",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
