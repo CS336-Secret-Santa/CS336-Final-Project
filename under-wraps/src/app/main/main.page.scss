@@ -1,0 +1,38 @@
+ion-content {
+  text-align: center;
+}
+
+.header {
+  display: flex;
+  // border: 2px solid black;
+  justify-content:space-between;
+}
+
+.header-left {
+  margin-left: 20px;
+  // border: 2px solid black;
+}
+
+.header-right {
+  margin-right: 20px;
+  // border: 2px solid black;
+}
+
+.logout {
+  margin-top: 46px;
+  // border: 2px solid black;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: -20px;
+  // border: 2px solid black;
+  color: #2c3e50;
+}
+
+// Don't remove
+// h5 {
+//   border: 2px solid black;
+// }
+
