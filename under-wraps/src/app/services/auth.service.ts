@@ -39,12 +39,14 @@ export class AuthService {
   }
 
   // Handle Sign Up
-  signup(email: string, password: string) {
+  signup(email: string, password: string, username: string) {
     createUserWithEmailAndPassword(this.auth, email, password)
     .then((userCredential) => {
       // User Created 
       // store information about the user (https://firebase.google.com/docs/reference/js/auth.user.md#user_interface)
       const user = userCredential.user;
+      // if the user was successfully created, also store their username in the database
+        // TODO code for firestore (email/username into users)
       // route to a new page if sign up is successful
       this.router.navigate(['/home', user]); // this page should also be restricted to authorized users
     })
