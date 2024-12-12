@@ -120,28 +120,30 @@ h1 {
   display: flex;
   justify-content: space-evenly;
 
-  border: 2px solid black;
+  // border: 2px solid black;
 }
 
 .admin-text {
-  border: 2px solid black;
+  // border: 2px solid black;
 }
 
 .admin-text h2 {
+  font-size: 32px;
   font-weight: bold;
   color: #2c3e50;
-  border: 2px solid black;
+  // border: 2px solid black;
 }
 
 .manage-button-div {
-  border: 2px solid black;
+  margin-top: 5px;
+  // border: 2px solid black;
 }
 
 .manage-button-div ion-button {
   font-size: 16px;
   width: 130px;
   height: 50px;
-  border: 2px solid black;
+  // border: 2px solid black;
 }
 
 
