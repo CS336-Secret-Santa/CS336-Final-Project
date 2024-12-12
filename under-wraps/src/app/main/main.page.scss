@@ -4,8 +4,10 @@ ion-content {
 
 .header {
   display: flex;
+  // margin-bottom: 3px;
   // border: 2px solid black;
   justify-content:space-between;
+  background-color: #FFE5B4;
 }
 
 .header-left {
@@ -18,7 +20,7 @@ ion-content {
   // border: 2px solid black;
 }
 
-.logout {
+.logout-button {
   margin-top: 46px;
   // border: 2px solid black;
 }
@@ -35,4 +37,70 @@ h1 {
 // h5 {
 //   border: 2px solid black;
 // }
+
+
+.add-gift-button-div {
+  // border: 2px solid black;
+}
+
+.add-gift-button {
+  // border: 2px solid black;
+}
+
+
+.all-member-card-div {
+  margin-top: 2px;
+  // border: 2px solid black;
+}
+
+.member-card {
+  display: flex;
+  justify-content:center;
+  margin-top: 0px;
+  margin-left: 4px;
+  margin-right: 8px;
+  margin-bottom: 2px;
+  // border: 2px solid black;
+}
+
+.image-div {
+  // border: 2px solid black;
+  margin: 6px;
+  width: 140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.member-card img {
+  width: 62x;
+  height: 62px;
+  object-fit: cover; /* Ensure the image fits nicely */
+  border-radius: 50%;
+  // border: 2px solid black;
+}
+
+.member-card-header-div {
+  margin: 0px;
+  // border: 2px solid black;
+}
+
+.member-card-header-div ion-card-header {
+  padding: 0px;
+  // border: 2px solid black;
+  margin-right: 2px;
+}
+
+.member-card-header-div ion-card-title {
+  margin: 5px;
+  font-size:large;
+  // border: 2px solid black;
+}
+
+.member-card-header-div ion-card-content {
+  margin: 0px;
+  padding: 0px;
+  font-size: small;
+  // border: 2px solid black;
+}
 
