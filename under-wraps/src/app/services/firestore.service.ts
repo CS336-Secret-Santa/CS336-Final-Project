@@ -1,6 +1,31 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore, collection, collectionData, addDoc, DocumentReference, where, query, getDoc, getDocs, setDoc, deleteDoc } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, timestamp } from 'rxjs';
+
+/** 
+ * FirestoreService implements an API for interacting with this app's Firestore database.
+ * 
+ * Note: Much of this code was implemented with copilot's help (and some chatgpt)
+ * Development Note: Check for TODOs in the code. 
+*/
+
+// TODO list
+  // function for getting all groups a user is in x
+
+  // function for getting all users in a group x
+
+  // function for checking if I am an admin of a group x
+
+  // function for retreiving info about my match in a group x
+
+  // function for removing members from a group x
+
+  // function for deleting a group
+
+  // ensure that data can be tracked throughout the app...
+    // - when a user is created, store their reference in the app
+    // - when a user logs in, store their reference in the app
+    // - when a group is loaded, store the group reference in the app
 
 @Injectable({
   providedIn: 'root'
@@ -14,30 +39,28 @@ export class FirestoreService {
   /* 
   Firestore database structure:
   - Users
-    - email
-    - username
-    - bio
-    - profilePic
+    - email (string)
+    - username (string)
+    - bio (string)
+    - profilePic (string)
+    - timestamp (timestamp)
     - Preferences
       - preference (string)
     - Groups
       - group (reference)
       - match (reference)
+      - isAdmin (boolean)
   - Groups
-    - name
-    - code
-    - admin
-    - closed
-    - timestamp
+    - name (string)
+    - code (string)
+    - admin (reference)
+    - closed (boolean)
+    - timestamp (timestamp)
     - members
       - member (reference)
   */
 
-  // groups$: Observable<any[]>;
-
-  constructor() { 
-    // this.groups$ = collectionData(this.groupColl);
-  }
+  constructor() {  }
 
   /**
    * Since most methods in the API return a reference to a document, 
@@ -63,7 +86,7 @@ export class FirestoreService {
   async createUser(email: string, username: string) {
     try {
       // create user
-      const docRef = await addDoc(this.userColl, { email: email, username: username });
+      const docRef = await addDoc(this.userColl, { email: email, username: username, timestamp: new Date(Date.now()).toLocaleString() });
       return docRef; // return the actual data from the document, not the reference.
     }
     catch (e) {
@@ -155,6 +178,26 @@ export class FirestoreService {
     }
   }
 
+  /**
+   * Check if a user is an admin of a group
+   * 
+   * @param user a reference to the user's document
+   * @param group a reference to the group's document
+   * @returns true if the user is an admin of the group, false otherwise
+   */
+  async checkIfAdmin(user: DocumentReference, group: DocumentReference) {
+    // check if a user is an admin of a group
+    try {
+      const queryRes = query(collection(user, "Groups"), where("group", "==", group))
+      const querySnapshot = await getDocs(queryRes);
+      return querySnapshot.docs[0].data()['isAdmin'];
+    }
+    catch (e) {
+      console.error(e);
+      return false
+    }
+  }
+
   /// PREFERENCES ///
 
   /**
@@ -210,6 +253,7 @@ export class FirestoreService {
     catch (e) {
       console.error(e);
     }
+  }
 
   /// GROUPS ///
 
@@ -226,14 +270,39 @@ export class FirestoreService {
   async createGroup(name: string, code: string, creator: DocumentReference) {
     try {
       // create group
-      const docRef = await addDoc(this.groupColl, { name: name, code: code, admin: creator, closed: false });
-      return docRef; // return the actual data from the document, not the reference.
+      const groupRef = await addDoc(this.groupColl, { name: name, code: code, admin: creator, closed: false, timestamp: new Date(Date.now()).toLocaleString() });
+      if (groupRef) {
+        this.addUserToGroup(groupRef, creator); // add the creator to the group
+        // get the current group's record in the user's document
+        const currentGroup = query(collection(creator, "Groups"), where("group", "==", groupRef));
+        const querySnapshot = await getDocs(currentGroup);
+        // make the creator an admin of the group
+        setDoc(querySnapshot.docs[0].ref, { isAdmin: true }, { merge: true }); 
+      } 
+
+      return groupRef; // return the actual data from the document, not the reference.
     }
     catch (e) {
       console.error(e);
       return false;
     }
   }  
+
+  /**
+   * deletes a group from the Firestore "Groups" collection
+   * TODO: ensure that it deletes this data everywhere else it is stored
+   * 
+   * @param document a reference to the group's document
+   */
+  deleteGroup(document: DocumentReference) {
+    // delete a group
+    try {
+      deleteDoc(document);
+    }
+    catch (e) {
+      console.error(e);
+    }
+  }
 
   /**
    * Retrieves a group document based on its unique code
@@ -247,6 +316,151 @@ export class FirestoreService {
       const queryRes = query(this.groupColl, where("code", "==", code))
       const querySnapshot = await getDocs(queryRes);
       return querySnapshot.docs[0].ref;
+    }
+    catch (e) {
+      console.error(e);
+      return false;
+    }
+  }
+
+  /**
+   * Add a user to a group using the group's unique code
+   * 
+   * @param code the code used to join the group
+   * @param user the user who is joining the group
+   */
+  joinGroupByCode(code: string, user: DocumentReference) {
+    // join a group by its unique code
+    try {
+      this.getGroupByCode(code).then(group => {
+        // if it was successful, add the user to the group
+        if (group) {
+          this.addUserToGroup(group, user);
+        }
+        else {
+          console.error("Group not found.");
+          // TODO: display error message to user, similar to auth service
+        }
+      });
+    }
+    catch (e) {
+      console.error(e);
+    }
+  }
+
+  /**
+   * Gets the data of all of the groups a particular member is in.
+   * @param user the user to get groups for
+   * @returns an array of groups the user is in OR false if an error occurred
+   */
+  async getGroupsByUser(user: DocumentReference) {
+    // get all groups a user is in
+    try {
+      const queryRes = query(collection(user, "Groups"));
+      const querySnapshot = await getDocs(queryRes);
+      return querySnapshot.docs.map(doc => doc.data());
+    }
+    catch (e) {
+      console.error(e);
+      return false;
+    }
+  }
+
+  async getUsersByGroup(group: DocumentReference) {
+    // get all users in a group
+    try {
+      const queryRes = query(collection(group, "Members"));
+      const querySnapshot = await getDocs(queryRes);
+      return querySnapshot.docs.map(doc => doc.data());
+    }
+    catch (e) {
+      console.error(e);
+      return false;
+    }
+  }
+
+
+  /// GROUP MEMBERS ///
+  /**
+   * Adds a user to a group and adds the group to the user's list of groups
+   * 
+   * @param group a reference to the group's document
+   * @param user a reference to the user's document
+   */
+  addUserToGroup(group: DocumentReference, user: DocumentReference) {
+    try {
+      addDoc(collection(group, "Members"), { member: user });
+      addDoc(collection(user, "Groups"), { group: group });
+    }
+    catch (e) {
+      console.error(e);
+    }
+  }
+
+  /**
+   * Removes a user from a group and 
+   * removes the group from the user's list of groups
+   * 
+   * @param group a reference to the group's document
+   * @param user a reference to the user's document
+   */
+  async removeUserFromGroup(group: DocumentReference, user: DocumentReference) {
+    try {
+      // remove user from group
+      const queryRes = query(collection(group, "Members"), where("member", "==", user))
+      const querySnapshot = await getDocs(queryRes);
+      deleteDoc(querySnapshot.docs[0].ref);
+
+      // remove group from user
+      const userGroup = query(collection(user, "Groups"), where("group", "==", group))
+      const userGroupSnapshot = await getDocs(userGroup);
+      deleteDoc(userGroupSnapshot.docs[0].ref);
+    }
+    catch (e) {
+      console.error(e);
+    }
+  }
+
+  /**
+   * Adds a user's match from a particular group to their document about that group
+   * 
+   * @param group a reference to the group's document
+   * @param user a reference to the user's document
+   * @param matchedUser a reference to the document of the user's match
+   */
+  async assignMatch(group: DocumentReference, user: DocumentReference, matchedUser: DocumentReference) {
+    // assign a match to a user in a group
+    try {
+      // find the document in the user's grouop collection that matches the group
+      const queryRes = query(collection(user, "Groups"), where("group", "==", group))
+      // add the matched user to the document
+      const querySnapshot = await getDocs(queryRes);
+      const currentGroup = querySnapshot.docs[0].ref;
+      setDoc(currentGroup, { match: matchedUser }, { merge: true });
+    }
+    catch (e) {
+      console.error(e);
+    }
+  }
+
+  /**
+   * Gets a reference to a user's match in a group
+   * 
+   * @param group a reference to the group's document
+   * @param user a reference to the user's document
+   * @returns returns the user's match in the group OR false if an error occurred
+   */
+  async getMatch(group: DocumentReference, user: DocumentReference) {
+    // get a user's match in a group
+    try {
+      // find the document in the user's grouop collection that matches the group
+      const queryRes = query(collection(user, "Groups"), where("group", "==", group))
+      // get the matched user from the document
+      const querySnapshot = await getDocs(queryRes);
+      const currentGroup = querySnapshot.docs[0].ref;
+      const groupData = (await getDoc(currentGroup)).data();
+      const match = groupData ? groupData['match'] : false;
+      return match;
     }
     catch (e) {
       console.error(e);
