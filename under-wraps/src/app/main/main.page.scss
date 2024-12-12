@@ -4,7 +4,14 @@ ion-content {
 
 .header {
   display: flex;
-  // margin-bottom: 3px;
+
+  //start: hoverOverScroll
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  //end: hoverOverScroll
+
   // border: 2px solid black;
   justify-content:space-between;
   background-color: #FFE5B4;
