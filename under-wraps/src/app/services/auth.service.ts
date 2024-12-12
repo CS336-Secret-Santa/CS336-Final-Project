@@ -20,10 +20,9 @@ export class AuthService {
     signInWithEmailAndPassword(this.auth, email, password)
     .then((userCredential) => {
       // Signed in 
-      // store information about the user (https://firebase.google.com/docs/reference/js/auth.user.md#user_interface)
-      const user = userCredential.user;
+      const userRef = this.firestoreService.getUserByEmail(email);
       // route to a new page if login is successful
-      this.router.navigate(['/home', user]); // this page should also be restricted to authorized users
+      this.router.navigate(['/home', userRef]); // this page should also be restricted to authorized users
     })
     .catch((error) => {
       // catch error information for log 
@@ -46,14 +45,10 @@ export class AuthService {
     createUserWithEmailAndPassword(this.auth, email, password)
     .then((userCredential) => {
       // User Created 
-      // store information about the user (https://firebase.google.com/docs/reference/js/auth.user.md#user_interface)
-      const user = userCredential.user;
       // if the user was successfully created, also store their username in the database
-        // TODO code for firestore (email/username into users)
-      const coll = collection(this.firestoreService.firestore, 'Users');
-      const res = addDoc(coll, { email: email, username: username });
+      const userRef = this.firestoreService.createUser(email, username);
       // route to a new page if sign up is successful
-      this.router.navigate(['/home', user]); // this page should also be restricted to authorized users
+      this.router.navigate(['/home', userRef]); // this page should also be restricted to authorized users
     })
     .catch((error) => {
       // catch error information for log 
