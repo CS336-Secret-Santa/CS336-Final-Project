@@ -2,12 +2,15 @@ import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from '@angular/fire/auth';
+import { collection, addDoc } from 'firebase/firestore';
+import { FirestoreService } from './firestore.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   auth: Auth = inject(Auth);
+  firestoreService: FirestoreService = inject(FirestoreService);
   constructor(private router: Router, private toastController: ToastController) { }
 
   // code based on https://firebase.google.com/docs/auth/web/password-auth
@@ -47,6 +50,8 @@ export class AuthService {
       const user = userCredential.user;
       // if the user was successfully created, also store their username in the database
         // TODO code for firestore (email/username into users)
+      const coll = collection(this.firestoreService.firestore, 'Users');
+      const res = addDoc(coll, { email: email, username: username });
       // route to a new page if sign up is successful
       this.router.navigate(['/home', user]); // this page should also be restricted to authorized users
     })
