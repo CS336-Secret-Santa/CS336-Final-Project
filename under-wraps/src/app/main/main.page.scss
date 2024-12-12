@@ -15,6 +15,7 @@ ion-content {
   // border: 2px solid black;
   justify-content:space-between;
   background-color: #FFE5B4;
+  margin-bottom: 7px;
 }
 
 .header-left {
@@ -58,7 +59,7 @@ h1 {
 .all-member-card-div {
   margin-top: 2px;
   // start - static admin bottom bar
-  max-height: 510px;
+  max-height: 507px;
   overflow-y: auto;
   // end - static admin bottom bar
   // border: 2px solid black;
@@ -76,7 +77,7 @@ h1 {
 
 .image-div {
   // border: 2px solid black;
-  margin: 6px;
+  margin: 8px;
   width: 140px;
   display: flex;
   justify-content: center;
@@ -84,8 +85,8 @@ h1 {
 }
 
 .member-card img {
-  width: 62x;
-  height: 62px;
+  width: 60x;
+  height: 60px;
   object-fit: cover; /* Ensure the image fits nicely */
   border-radius: 50%;
   // border: 2px solid black;
@@ -117,7 +118,8 @@ h1 {
 
 .admin-nav-bar {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
+
   border: 2px solid black;
 }
 
@@ -126,6 +128,8 @@ h1 {
 }
 
 .admin-text h2 {
+  font-weight: bold;
+  color: #2c3e50;
   border: 2px solid black;
 }
 
@@ -134,6 +138,9 @@ h1 {
 }
 
 .manage-button-div ion-button {
+  font-size: 16px;
+  width: 130px;
+  height: 50px;
   border: 2px solid black;
 }
 
