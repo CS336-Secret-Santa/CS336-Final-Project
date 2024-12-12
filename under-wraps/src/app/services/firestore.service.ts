@@ -11,6 +11,28 @@ export class FirestoreService {
   userColl = collection(this.firestore, 'Users');
   groupColl = collection(this.firestore, 'Groups');
 
+  /* 
+  Firestore database structure:
+  - Users
+    - email
+    - username
+    - bio
+    - profilePic
+    - Preferences
+      - preference (string)
+    - Groups
+      - group (reference)
+      - match (reference)
+  - Groups
+    - name
+    - code
+    - admin
+    - closed
+    - timestamp
+    - members
+      - member (reference)
+  */
+
   // groups$: Observable<any[]>;
 
   constructor() { 
@@ -133,6 +155,62 @@ export class FirestoreService {
     }
   }
 
+  /// PREFERENCES ///
+
+  /**
+   * Retrieves a user's preferences from the Firestore "Preferences" collection
+   * 
+   * @param document a reference to the user's document
+   * @returns an array of the user's preferences OR false if an error occurred
+   */
+  async getPreferences(document: DocumentReference) {
+    try {
+      // get user's preferences
+      const prefDocs = collection(document, "Preferences");
+      const querySnapshot = await getDocs(prefDocs);
+      const preferences = querySnapshot.docs.map(doc => doc.data());
+      return preferences;
+    }
+    catch (e) {
+      console.error(e);
+      return false;
+    }
+  }
+
+  /**
+   * Adds a preference to the Firestore "Preferences" collection
+   * 
+   * @param document a reference to the user's document
+   * @param preference the user's preference
+   */
+  addPreference(document: DocumentReference, preference: string) {
+    // add a preference for a particular user
+    try {
+      addDoc(collection(document, "Preferences"), { preference: preference });
+    }
+    catch (e) {
+      console.error(e);
+    }
+  }
+
+  /**
+   * Deletes a preference from the Firestore "Preferences" collection
+   * 
+   * @param document a reference to the user's document
+   * @param preference the user's preference
+   */
+  async deletePreference(document: DocumentReference, preference: string) {
+    // delete a preference for a particular user
+    try {
+      const prefDocs = collection(document, "Preferences");
+      const queryRes = query(prefDocs, where("preference", "==", preference))
+      const querySnapshot = await getDocs(queryRes);
+      deleteDoc(querySnapshot.docs[0].ref);
+    }
+    catch (e) {
+      console.error(e);
+    }
+
   /// GROUPS ///
 
   /**
@@ -145,10 +223,10 @@ export class FirestoreService {
    * - It should be a string of 5 characters (upper/lower case letters and numbers).
    * @returns the group's document OR false if an error occurred
    */
-  async createGroup(name: string, code: string) {
+  async createGroup(name: string, code: string, creator: DocumentReference) {
     try {
       // create group
-      const docRef = await addDoc(this.groupColl, { name: name, code: code });
+      const docRef = await addDoc(this.groupColl, { name: name, code: code, admin: creator, closed: false });
       return docRef; // return the actual data from the document, not the reference.
     }
     catch (e) {
@@ -157,5 +235,23 @@ export class FirestoreService {
     }
   }  
 
+  /**
+   * Retrieves a group document based on its unique code
+   * 
+   * @param code a unique code for a group
+   * @returns a reference to the group's document OR false if an error occurred
+   */
+  async getGroupByCode(code: string) {
+    try {
+      // get group by code
+      const queryRes = query(this.groupColl, where("code", "==", code))
+      const querySnapshot = await getDocs(queryRes);
+      return querySnapshot.docs[0].ref;
+    }
+    catch (e) {
+      console.error(e);
+      return false;
+    }
+  }
 
 }
