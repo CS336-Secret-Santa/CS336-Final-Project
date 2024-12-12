@@ -10,15 +10,6 @@ import { Observable, timestamp } from 'rxjs';
 */
 
 // TODO list
-  // function for getting all groups a user is in x
-
-  // function for getting all users in a group x
-
-  // function for checking if I am an admin of a group x
-
-  // function for retreiving info about my match in a group x
-
-  // function for removing members from a group x
 
   // function for deleting a group
 
