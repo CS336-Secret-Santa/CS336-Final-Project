@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from '@angular/fire/auth';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, DocumentReference } from 'firebase/firestore';
 import { FirestoreService } from './firestore.service';
 
 @Injectable({
@@ -11,6 +11,8 @@ import { FirestoreService } from './firestore.service';
 export class AuthService {
   auth: Auth = inject(Auth);
   firestoreService: FirestoreService = inject(FirestoreService);
+
+  currentUser: DocumentReference | null = null;
   constructor(private router: Router, private toastController: ToastController) { }
 
   // code based on https://firebase.google.com/docs/auth/web/password-auth
@@ -21,8 +23,15 @@ export class AuthService {
     .then((userCredential) => {
       // Signed in 
       const userRef = this.firestoreService.getUserByEmail(email);
-      // route to a new page if login is successful
-      this.router.navigate(['/home', userRef]); // this page should also be restricted to authorized users
+      userRef.then((docRef) => { 
+        if (docRef) {
+          // save the document reference for the current user
+          this.currentUser = docRef;
+          // route to a new page if login is successful
+          this.router.navigate(['/join-group']); // this page should also be restricted to authorized users
+        }
+      });
+      
     })
     .catch((error) => {
       // catch error information for log 
@@ -48,7 +57,14 @@ export class AuthService {
       // if the user was successfully created, also store their username in the database
       const userRef = this.firestoreService.createUser(email, username);
       // route to a new page if sign up is successful
-      this.router.navigate(['/home', userRef]); // this page should also be restricted to authorized users
+      userRef.then((docRef) => { 
+        if (docRef) {
+          // save the document reference for the current user
+          this.currentUser = docRef;
+          // this page should also be restricted to authorized users
+          this.router.navigate(['/join-group']);
+        }
+      });
     })
     .catch((error) => {
       // catch error information for log 
