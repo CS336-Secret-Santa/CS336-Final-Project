@@ -16,7 +16,7 @@
     <!-- "group is an object with two values" -->
       <!-- it contains a DocumentReference (in .ref) for accessing the group in the future -->
       <!-- it contains a DocumentData (in .data) which has all of the fields contained within the group (see FirestoreService for details) -->
-    <div class="group">
+    <div class="group" (click)="this.router.navigate(['/main', group.data['code']]);">
       <!-- <p class="group-content">Reference is {{group.ref}}</p> -->
       <p class="group-content">Group data is {{group.data['name']}}</p>
     </div>

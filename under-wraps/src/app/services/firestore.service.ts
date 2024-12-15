@@ -385,15 +385,15 @@ export class FirestoreService {
    */
   async getGroupsByUser(user: DocumentReference) {
     // get all groups a user is in
-    // try {
+    try {
       const queryRes = query(collection(user, "Groups"));
       const querySnapshot = await getDocs(queryRes);
       return querySnapshot.docs.map(doc => doc.data());
-    // }
-    // catch (e) {
-    //   console.error(e);
-    //   return false;
-    // }
+    }
+    catch (e) {
+      console.error(e);
+      return false;
+    }
   }
 
   /**

@@ -4,6 +4,7 @@ import { FirestoreService } from '../services/firestore.service';
 import { AuthService } from '../services/auth.service';
 import { Observable, EMPTY } from 'rxjs';
 import { DocumentData, DocumentReference, where } from 'firebase/firestore';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-group',
@@ -13,6 +14,7 @@ import { DocumentData, DocumentReference, where } from 'firebase/firestore';
 export class GroupPage implements OnInit {
   firestore: FirestoreService = inject(FirestoreService);
   auth: AuthService = inject(AuthService);
+  router: Router = inject(Router);
 
   // groups$: Observable<DocumentData[]>;
   groupList: {ref: DocumentReference<DocumentData, DocumentData>, data:DocumentData}[] = [];
@@ -36,11 +38,6 @@ export class GroupPage implements OnInit {
   private async getGroups() {
     if (this.currentUser) {
       const groupQuery: DocumentData[] | false = await this.firestore.getGroupsByUser(this.currentUser);
-      // const filteredGroups = groupQuery.filter((doc) => {
-      //   if (doc) {
-      //     return doc;
-      //   }
-      // });
       if (groupQuery) {
         // get objects with group references and data
         const queryRes = groupQuery.map(async (doc) => {
@@ -66,35 +63,6 @@ export class GroupPage implements OnInit {
       this.firestore.showErrorToast("No user logged in.");
     }
   }
-
-  // async fetchDocumentDataWithReferences(
-  // ): Promise<{ ref: DocumentReference, data: DocumentData | null }[]> {
-  //   const docArray: DocumentData[] | false = await this.firestore.getGroupsByUser(this.currentUser);
-  //   // If docArray is false, return an empty array
-  //   if (!docArray) return [];
-  
-  //   // Use Promise.all to resolve the references and fetch their data
-  //   const result = await Promise.all(
-  //     docArray.map(async (doc: DocumentData) => {
-  //       // Extract the reference from the document data (assuming it is in the 'group' field)
-  //       const groupRef = doc['group'] as DocumentReference;
-  
-  //       // Fetch the data from the referenced document (using your custom function)
-  //       const groupData = await this.firestore.convertRefToDocData(groupRef);
-  
-  //       // Return an object with the reference and the referenced data
-  //       return {
-  //         ref: groupRef,
-  //         data: groupData || null,  // return null if no data is found
-  //       };
-  //     })
-  //   );
-  
-  //   this.groupList = result;//await this.fetchDocumentDataWithReferences();//this.getGroups();
-
-  //   return result;
-  // }
-  
 
   ngOnInit() {
     this.getGroups();
