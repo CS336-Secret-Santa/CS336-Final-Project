@@ -1,7 +1,8 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, collectionData, doc, addDoc, DocumentReference, where, query, getDoc, getDocs, setDoc, deleteDoc, DocumentSnapshot } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, doc, addDoc, DocumentReference, where, query, getDoc, getDocs, setDoc, deleteDoc, DocumentSnapshot, DocumentData, Timestamp } from '@angular/fire/firestore';
 import { ToastController } from '@ionic/angular';
 import { generate, Observable, timestamp } from 'rxjs';
+import { AuthService } from './auth.service';
 
 /** 
  * FirestoreService implements an API for interacting with this app's Firestore database.
@@ -54,7 +55,7 @@ export class FirestoreService {
       - member (reference)
   */
 
-  constructor(private toastController: ToastController) {  }
+  constructor(private toastController: ToastController) { }
 
   /// UTILITIES ///
 
@@ -299,7 +300,6 @@ export class FirestoreService {
 
   /**
    * deletes a group from the Firestore "Groups" collection
-   * TODO: ensure that it deletes this data everywhere else it is stored
    * 
    * @param document a reference to the group's document
    */
