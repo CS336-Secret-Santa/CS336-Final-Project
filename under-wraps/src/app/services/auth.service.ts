@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from '@angular/fire/auth';
-import { collection, addDoc, DocumentReference } from 'firebase/firestore';
+import { collection, addDoc, DocumentReference, doc } from '@angular/fire/firestore';
 import { FirestoreService } from './firestore.service';
 
 @Injectable({
@@ -13,7 +13,9 @@ export class AuthService {
   firestoreService: FirestoreService = inject(FirestoreService);
 
   currentUser: DocumentReference | null = null;
-  constructor(private router: Router, private toastController: ToastController) { }
+  constructor(private router: Router, private toastController: ToastController) { 
+    this.currentUser = doc(this.firestoreService.firestore, 'Users/H4lfkQS9fCWrpYj7lmxX'); // get the current user
+  }
 
   // code based on https://firebase.google.com/docs/auth/web/password-auth
 
