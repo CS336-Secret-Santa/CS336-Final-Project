@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, collectionData, doc, addDoc, DocumentReference, where, query, getDoc, getDocs, setDoc, deleteDoc } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, doc, addDoc, DocumentReference, where, query, getDoc, getDocs, setDoc, deleteDoc, DocumentSnapshot } from '@angular/fire/firestore';
 import { ToastController } from '@ionic/angular';
 import { generate, Observable, timestamp } from 'rxjs';
 
@@ -13,6 +13,8 @@ import { generate, Observable, timestamp } from 'rxjs';
 // TODO list
 
   // function for deleting a group
+  // maybe delete convertRefToDoc() and just use getDoc() directly
+  // remove any code using promises and replace it with async/await (if time permits)
 
   // ensure that data can be tracked throughout the app...
     // - when a user is created, store their reference in the app
@@ -63,8 +65,14 @@ export class FirestoreService {
    * @param ref a reference to a document
    * @returns document data
    */
-  convertRefToDoc(ref: DocumentReference) {
-    return getDoc(ref);
+  async convertRefToDocData(ref: DocumentReference) {
+    const DocumentSnapshot =  await getDoc(ref);
+    const data = DocumentSnapshot.data();
+    if (data) {
+      return data;
+    } else {
+      return false;
+    }
   }
  
   /// USERS ///
@@ -128,17 +136,20 @@ export class FirestoreService {
   /**
    * Deletes a user from the Firestore "Users" collection
    * 
+   * Note: this method is not currently used in the app.
+   * - To implement this method, you would need to delete the user's data from all other collections.
+   * - You would also need to remove authentication data from Firebase Auth.
    * @param document a reference to the user's document
    */
-  deleteUser(document: DocumentReference) {
-    // delete a user
-    try {
-      deleteDoc(document);
-    }
-    catch (e) {
-      console.error(e);
-    }
-  }
+  // deleteUser(document: DocumentReference) {
+  //   // delete a user
+  //   try {
+  //     deleteDoc(document);
+  //   }
+  //   catch (e) {
+  //     console.error(e);
+  //   }
+  // }
 
   /**
    * Updates a user's bio in the Firestore "Users" collection
@@ -292,15 +303,18 @@ export class FirestoreService {
    * 
    * @param document a reference to the group's document
    */
-  // deleteGroup(document: DocumentReference) {
-  //   // delete a group
-  //   try {
-  //     deleteDoc(document);
-  //   }
-  //   catch (e) {
-  //     console.error(e);
-  //   }
-  // }
+  deleteGroup(document: DocumentReference) {
+    // delete a group
+    try {
+      // remove this document reference from any users who reference it
+      this.removeGroupFromAllUsers(document);
+      // delete the group
+      deleteDoc(document);
+    }
+    catch (e) {
+      console.error(e);
+    }
+  }
 
   /**
    * Retrieves a group document based on its unique code
@@ -327,26 +341,41 @@ export class FirestoreService {
    * @param code the code used to join the group
    * @param user the user who is joining the group
    */
-  joinGroupByCode(code: string, user: DocumentReference) {
+  async joinGroupByCode(code: string, user: DocumentReference) {
     // join a group by its unique code
     try {
-      this.getGroupByCode(code).then(group => {
-        // if it was successful, add the user to the group
+      const group = await this.getGroupByCode(code)
+        // if a group with this code exists, add the user to the group
         if (group) {
-          this.addUserToGroup(group, user);
-          return true
-        }
-        else {
+          const groupData = await this.convertRefToDocData(group);
+          // if the group has data (was initialized properly) and is not closed, add the user
+          if (groupData && !groupData['closed']) {
+            // check to see if the user is already a part of this group
+            const groupData = await this.getUsersGroup(user, group);
+            if (groupData) {
+              console.error("User is already in this group.");
+              this.showErrorToast("You are already in this group.");
+              return false;
+            } else {
+              // if this user is new to the group and the group is open, add them
+              this.addUserToGroup(group, user);
+              console.log("User added to group.");
+              return true;
+            }
+          } else {
+            console.error("Group is closed.");
+            this.showErrorToast("This group is closed.");
+          }
+        } else {
           console.error("Group not found.");
-          return false;
+          this.showErrorToast(`Group with code "${code}" not found.`);
         }
-      });
+      return false;
     }
     catch (e) {
       console.error(e);
       return false;
     }
-    return false;
   }
 
   /**
@@ -367,12 +396,72 @@ export class FirestoreService {
     }
   }
 
-  async getUsersByGroup(group: DocumentReference) {
+  /**
+   * Gets the data of a particular group a user is in
+   * @param user the user we are getting data from
+   * @param group the group to get data for
+   * @returns the group's data OR false if an error occurred
+   */
+  async getUsersGroup(user: DocumentReference, group: DocumentReference) {
+    // get a user's group
+    try {
+      const queryRes = query(collection(user, "Groups"), where("group", "==", group))
+      const querySnapshot = await getDocs(queryRes);
+      if (querySnapshot.docs[0]) {
+        return querySnapshot.docs[0].data();
+      } else {
+        return false;
+      }
+    }
+    catch (e) {
+      console.error(e);
+      return false;
+    }
+  }
+
+  /**
+   * Gets all of the users in a particular group
+   * @param group the group to get users for
+   * @returns an array of users in the group OR false if an error occurred
+   s*/
+  private async getUserSnapshotsByGroup(group: DocumentReference) {
     // get all users in a group
     try {
       const queryRes = query(collection(group, "Members"));
       const querySnapshot = await getDocs(queryRes);
-      return querySnapshot.docs.map(doc => doc.data());
+      return querySnapshot.docs;
+    }
+    catch (e) {
+      console.error(e);
+      return false;
+    }
+  }
+
+  async getUserReferencesByGroup(group: DocumentReference) {
+    // get all users in a group and return their references
+    try {
+      const snapshots = await this.getUserSnapshotsByGroup(group);
+      if (snapshots) {
+        return snapshots.map(doc => doc.ref);
+      } else {
+        return false;
+      }
+    }
+    catch (e) {
+      console.error(e);
+      return false;
+    }
+  }
+
+  async getUserDataByGroup(group: DocumentReference) {
+    // get all users in a group and return their data
+    try {
+      const snapshots = await this.getUserSnapshotsByGroup(group);
+      if (snapshots) {
+        return snapshots.map(doc => doc.data());
+      } else {
+        return false;
+      }
     }
     catch (e) {
       console.error(e);
@@ -399,8 +488,20 @@ export class FirestoreService {
   }
 
   /**
-   * Removes a user from a group and 
-   * removes the group from the user's list of groups
+   * Removes a user from a group and removes the group from the user's list of groups
+   * - Could be called when a user leaves a group, but the group still exists
+   * 
+   * @param group a reference to the group's document
+   * @param user a reference to the user's document
+   */
+  unlinkGroupandUser(group: DocumentReference, user: DocumentReference) {
+    this.removeUserFromGroup(group, user);
+    this.removeGroupFromUser(group, user);
+  }
+  /**
+   * Removes a user from a group's list of members 
+   * - Could be used when a user is deleted but a group still exists.
+   * - The user's data doesn't need to be updated, but their data should be removed from the group.
    * 
    * @param group a reference to the group's document
    * @param user a reference to the user's document
@@ -411,11 +512,41 @@ export class FirestoreService {
       const queryRes = query(collection(group, "Members"), where("member", "==", user))
       const querySnapshot = await getDocs(queryRes);
       deleteDoc(querySnapshot.docs[0].ref);
+    }
+    catch (e) {
+      console.error(e);
+    }
+  }
 
+  /**
+   * Removes a group from a user's list of groups
+   * - Could be used when a group is deleted but a user still exists.
+   * - The group's data doesn't need to be updated, but the group should be removed from the user.
+   * 
+   * @param group a reference to the group's document
+   * @param user a reference to the user's document
+   */
+  async removeGroupFromUser(group: DocumentReference, user: DocumentReference) {
+    try {
       // remove group from user
       const userGroup = query(collection(user, "Groups"), where("group", "==", group))
       const userGroupSnapshot = await getDocs(userGroup);
       deleteDoc(userGroupSnapshot.docs[0].ref);
+    }
+    catch (e) {
+      console.error(e);
+    }
+  }
+
+  async removeGroupFromAllUsers(group: DocumentReference) {
+    try {
+      // return an array of the data of all users in the group
+      const users = await this.getUserReferencesByGroup(group);
+      if (users) {
+        users.forEach(user => {
+          this.removeGroupFromUser(group, user);
+        });
+      }
     }
     catch (e) {
       console.error(e);
