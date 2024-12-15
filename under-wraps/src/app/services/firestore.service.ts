@@ -314,7 +314,7 @@ export class FirestoreService {
       return querySnapshot.docs[0].ref;
     }
     catch (e) {
-      console.error(e);
+      console.error(e); //note: sometimes this error is intentional, such as when it is called by joinGroupByCode()
       return false;
     }
   }

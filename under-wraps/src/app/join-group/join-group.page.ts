@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FirestoreService } from '../services/firestore.service';
 import { AuthService } from '../services/auth.service'; // to retreive the currently logged in user
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-join-group',
@@ -14,7 +15,7 @@ export class JoinGroupPage implements OnInit {
   groupName: string = "";
   groupCode: string = "";
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
@@ -25,13 +26,15 @@ export class JoinGroupPage implements OnInit {
     if (creatorRef) {
       const groupRef = this.firestoreService.createGroup(this.groupName, creatorRef);
     }
+    this.router.navigate(['/main']); // this page should also be restricted to authorized users
   }
   joinGroup() {
     // join an existing group
     // create a new group
     const creatorRef = this.authService.currentUser;
     if (creatorRef) {
-      const groupRef = this.firestoreService.joinGroupByCode(this.groupCode, creatorRef);
-    }
+      this.firestoreService.joinGroupByCode(this.groupCode, creatorRef);
+    } 
+    this.router.navigate(['/main']); // this page should also be restricted to authorized users
   }
 }
