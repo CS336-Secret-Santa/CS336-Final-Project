@@ -280,6 +280,8 @@ export class FirestoreService {
     }
     catch (e) {
       console.error(e);
+      // no need to account for cases where the group name is not unique.
+      // Even if two groups have the same name, they will have different codes.
       return false;
     }
   }  
@@ -290,15 +292,15 @@ export class FirestoreService {
    * 
    * @param document a reference to the group's document
    */
-  deleteGroup(document: DocumentReference) {
-    // delete a group
-    try {
-      deleteDoc(document);
-    }
-    catch (e) {
-      console.error(e);
-    }
-  }
+  // deleteGroup(document: DocumentReference) {
+  //   // delete a group
+  //   try {
+  //     deleteDoc(document);
+  //   }
+  //   catch (e) {
+  //     console.error(e);
+  //   }
+  // }
 
   /**
    * Retrieves a group document based on its unique code
@@ -332,17 +334,19 @@ export class FirestoreService {
         // if it was successful, add the user to the group
         if (group) {
           this.addUserToGroup(group, user);
+          return true
         }
         else {
           console.error("Group not found.");
-          // TODO: display error message to user, similar to auth service
-          this.showErrorToast(`Group with code '${code}' not found.`);
+          return false;
         }
       });
     }
     catch (e) {
       console.error(e);
+      return false;
     }
+    return false;
   }
 
   /**

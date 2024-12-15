@@ -27,6 +27,7 @@ export class AuthService {
         if (docRef) {
           // save the document reference for the current user
           this.currentUser = docRef;
+          console.log(this.currentUser);
           // route to a new page if login is successful
           this.router.navigate(['/join-group']); // this page should also be restricted to authorized users
         }
