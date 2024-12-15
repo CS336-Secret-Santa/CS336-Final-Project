@@ -28,18 +28,16 @@ export class JoinGroupPage implements OnInit {
     }
     this.router.navigate(['/main']); // this page should also be restricted to authorized users
   }
-  joinGroup() {
+  async joinGroup() {
     // join an existing group
     const creatorRef = this.authService.currentUser;
     if (creatorRef) {
-      const success = this.firestoreService.joinGroupByCode(this.groupCode, creatorRef);
-    
-      success ? this.router.navigate(['/main']) // this page should also be restricted to authorized users
-      : this.firestoreService.showErrorToast(`Group with code "${this.groupCode}" not found.`); 
+      const success = await this.firestoreService.joinGroupByCode(this.groupCode, creatorRef);
+      if (success) this.router.navigate(['/main']) // this page should also be restricted to authorized users
     } else {
       // When a user cannot be found based on the id found in the auth service
       console.log(`No user found. Current user: ${this.authService.currentUser}`);
-      this.firestoreService.showErrorToast("ERROR: You must be logged in to join a group.");
+      this.firestoreService.showErrorToast("You must be logged in to join a group.");
     }
   }
 }
