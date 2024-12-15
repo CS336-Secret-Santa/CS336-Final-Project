@@ -351,17 +351,17 @@ export class FirestoreService {
           // if the group has data (was initialized properly) and is not closed, add the user
           if (groupData && !groupData['closed']) {
             // check to see if the user is already a part of this group
-            this.getUsersGroup(user, group).then(userGroup => {
-              if (userGroup) {
-                console.error("User is already in this group.");
-                this.showErrorToast("You are already in this group.");
-                return false;
-              } else {
-                // if this user is new to the group and the group is open, add them
-                this.addUserToGroup(group, user);
-                return true;
-              }
-            });
+            const groupData = await this.getUsersGroup(user, group);
+            if (groupData) {
+              console.error("User is already in this group.");
+              this.showErrorToast("You are already in this group.");
+              return false;
+            } else {
+              // if this user is new to the group and the group is open, add them
+              this.addUserToGroup(group, user);
+              console.log("User added to group.");
+              return true;
+            }
           } else {
             console.error("Group is closed.");
             this.showErrorToast("This group is closed.");
@@ -407,7 +407,11 @@ export class FirestoreService {
     try {
       const queryRes = query(collection(user, "Groups"), where("group", "==", group))
       const querySnapshot = await getDocs(queryRes);
-      return querySnapshot.docs[0].data();
+      if (querySnapshot.docs[0]) {
+        return querySnapshot.docs[0].data();
+      } else {
+        return false;
+      }
     }
     catch (e) {
       console.error(e);
