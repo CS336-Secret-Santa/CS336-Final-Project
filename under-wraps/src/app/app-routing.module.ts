@@ -12,7 +12,7 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'main',
+    path: 'main/:code',
     loadChildren: () => import('./main/main.module').then( m => m.MainPageModule)
   },
   {
@@ -22,9 +22,14 @@ const routes: Routes = [
   {
     path: 'signup',
     loadChildren: () => import('./signup/signup.module').then( m => m.SignupPageModule)
-  },  {
+  },
+  {
     path: 'join-group',
     loadChildren: () => import('./join-group/join-group.module').then( m => m.JoinGroupPageModule)
+  },
+  {
+    path: 'group',
+    loadChildren: () => import('./group/group.module').then( m => m.GroupPageModule)
   },
 
 

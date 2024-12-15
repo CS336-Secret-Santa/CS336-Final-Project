@@ -29,7 +29,7 @@ export class AuthService {
           this.currentUser = docRef;
           console.log(this.currentUser);
           // route to a new page if login is successful
-          this.router.navigate(['/join-group']); // this page should also be restricted to authorized users
+          this.router.navigate(['/group']); // this page should also be restricted to authorized users
         }
       });
       
