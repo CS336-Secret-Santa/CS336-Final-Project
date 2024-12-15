@@ -134,22 +134,26 @@ h1 {
   // border: 2px solid black;
 }
 
-.manage-button-div {
+.management-button-div {
+  display: flex;
+  flex-direction: row;
   margin-top: 5px;
   // border: 2px solid black;
 }
 
-#manage-button {
+#disband-button {
   font-size: 16px;
-  width: 130px;
+  width: 100px;
   height: 50px;
+  margin-right: 10px;
   // border: 2px solid black;
 }
 
-ion-item-option {
-  border-radius: 15%;
-  margin-right: 5px;
-  margin-bottom: 2px;
+#match-button {
+  font-size: 16px;
+  width: 100px;
+  height: 50px;
+  // border: 2px solid black;
 }
 
 
