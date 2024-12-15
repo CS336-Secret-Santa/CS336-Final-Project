@@ -1,0 +1,23 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>joinGroup</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">joinGroup</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div>
+    <ion-button>Create Group</ion-button>
+    <ion-button>Join Group</ion-button>
+  </div>
+
+    <ion-input placeholder="Group Name" [(ngModel)]="groupName"></ion-input>
+    <ion-button (click)="createGroup()">Create</ion-button>
+    <ion-input placeholder="Group Code" [(ngModel)]="groupCode"></ion-input>
+    <ion-button (click)="joinGroup()">Join</ion-button>
+</ion-content>

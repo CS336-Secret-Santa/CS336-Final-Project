@@ -22,7 +22,11 @@ const routes: Routes = [
   {
     path: 'signup',
     loadChildren: () => import('./signup/signup.module').then( m => m.SignupPageModule)
+  },  {
+    path: 'join-group',
+    loadChildren: () => import('./join-group/join-group.module').then( m => m.JoinGroupPageModule)
   },
+
 
 ];
 

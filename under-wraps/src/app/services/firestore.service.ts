@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, collectionData, addDoc, DocumentReference, where, query, getDoc, getDocs, setDoc, deleteDoc } from '@angular/fire/firestore';
-import { Observable, timestamp } from 'rxjs';
+import { Firestore, collection, collectionData, doc, addDoc, DocumentReference, where, query, getDoc, getDocs, setDoc, deleteDoc } from '@angular/fire/firestore';
+import { ToastController } from '@ionic/angular';
+import { generate, Observable, timestamp } from 'rxjs';
 
 /** 
  * FirestoreService implements an API for interacting with this app's Firestore database.
@@ -51,7 +52,9 @@ export class FirestoreService {
       - member (reference)
   */
 
-  constructor() {  }
+  constructor(private toastController: ToastController) {  }
+
+  /// UTILITIES ///
 
   /**
    * Since most methods in the API return a reference to a document, 
@@ -63,7 +66,7 @@ export class FirestoreService {
   convertRefToDoc(ref: DocumentReference) {
     return getDoc(ref);
   }
-
+ 
   /// USERS ///
 
   /** 
@@ -252,14 +255,16 @@ export class FirestoreService {
    * Creates a group in the Firestore "Groups" collection
    * 
    * @param name the group's name
-   * @param code the group's join code
-   * - this code is used to join the group. 
-   * - It should be unique and not easily guessable.
-   * - It should be a string of 5 characters (upper/lower case letters and numbers).
    * @returns the group's document OR false if an error occurred
    */
-  async createGroup(name: string, code: string, creator: DocumentReference) {
+  async createGroup(name: string, creator: DocumentReference) {
     try {
+      // generate a code for the new group
+      // - this code is used to join the group. 
+      // - It should be unique and not easily guessable.
+      // - It should be a string of 5 characters (lower case letters and numbers).
+      const code: string = this.generateGroupCode();
+
       // create group
       const groupRef = await addDoc(this.groupColl, { name: name, code: code, admin: creator, closed: false, timestamp: new Date(Date.now()).toLocaleString() });
       if (groupRef) {
@@ -275,6 +280,8 @@ export class FirestoreService {
     }
     catch (e) {
       console.error(e);
+      // no need to account for cases where the group name is not unique.
+      // Even if two groups have the same name, they will have different codes.
       return false;
     }
   }  
@@ -285,15 +292,15 @@ export class FirestoreService {
    * 
    * @param document a reference to the group's document
    */
-  deleteGroup(document: DocumentReference) {
-    // delete a group
-    try {
-      deleteDoc(document);
-    }
-    catch (e) {
-      console.error(e);
-    }
-  }
+  // deleteGroup(document: DocumentReference) {
+  //   // delete a group
+  //   try {
+  //     deleteDoc(document);
+  //   }
+  //   catch (e) {
+  //     console.error(e);
+  //   }
+  // }
 
   /**
    * Retrieves a group document based on its unique code
@@ -309,7 +316,7 @@ export class FirestoreService {
       return querySnapshot.docs[0].ref;
     }
     catch (e) {
-      console.error(e);
+      console.error(e); //note: sometimes this error is intentional, such as when it is called by joinGroupByCode()
       return false;
     }
   }
@@ -327,16 +334,19 @@ export class FirestoreService {
         // if it was successful, add the user to the group
         if (group) {
           this.addUserToGroup(group, user);
+          return true
         }
         else {
           console.error("Group not found.");
-          // TODO: display error message to user, similar to auth service
+          return false;
         }
       });
     }
     catch (e) {
       console.error(e);
+      return false;
     }
+    return false;
   }
 
   /**
@@ -457,6 +467,40 @@ export class FirestoreService {
       console.error(e);
       return false;
     }
+  }
+
+  /// MISC ///
+  /**
+   * Generates a unique, random code for a group
+   * 
+   * @returns a string of 5 characters (lower case letters and numbers)
+   */
+  private generateGroupCode(): string {
+    // function from Copilot and https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
+    const code: string = Math.random().toString(36).substring(2, 7);
+
+    // check if the code is unique
+    this.getGroupByCode(code).then(group => {
+      if (group) {
+        // if the code is not unique, generate a new one
+        return this.generateGroupCode();
+      } else {
+        return code;
+      }
+    });
+    return code;
+  }
+
+  /**
+   * display a toast with an error message to the user
+   * @param errorString 
+   */
+  async showErrorToast(errorMessage: string, duration: number = 10000) {
+    const toast = await this.toastController.create({
+      message: errorMessage,
+      duration: duration,
+    });
+    toast.present();
   }
 
 }
