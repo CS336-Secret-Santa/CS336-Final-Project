@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { ModalController } from '@ionic/angular';
 import { IonicModule } from '@ionic/angular';
 
 import { MainPageRoutingModule } from './main-routing.module';
@@ -17,4 +17,12 @@ import { MainPage } from './main.page';
   ],
   declarations: [MainPage]
 })
-export class MainPageModule {}
+export class MainPageModule {
+
+}
+
+
+
+
+
+
