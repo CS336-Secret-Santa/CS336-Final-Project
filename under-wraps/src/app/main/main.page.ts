@@ -95,8 +95,4 @@ export class MainPage implements OnInit {
     }
   }
 
-  private checkAdmin() {
-    
-  }
-
 }
