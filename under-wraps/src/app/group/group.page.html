@@ -1,25 +1,30 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>group</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <div class = "header">
+  <div class = "header-left">
+    <h1> Gift Exchange Groups </h1>
+  </div>
+  <div class = "header-right">
+    <ion-button class = "logout-button" size = "small"> Log Out </ion-button>
+  </div>
+  </div>
+</ion-content>
 
-<ion-content [fullscreen]="true">
+<!-- <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">group</ion-title>
     </ion-toolbar>
-  </ion-header>
+  </ion-header> -->
 
-  @for (group of this.groupList; track $index) {
+  <!-- @for (group of this.groupList; track $index) { -->
     <!-- Placeholder for how each group will be displayed to the user -->
     <!-- "group is an object with two values" -->
       <!-- it contains a DocumentReference (in .ref) for accessing the group in the future -->
       <!-- it contains a DocumentData (in .data) which has all of the fields contained within the group (see FirestoreService for details) -->
-    <div class="group" (click)="this.router.navigate(['/main', group.data['code']]);">
+    <!-- <div class="group" (click)="this.router.navigate(['/main', group.data['code']]);"> -->
       <!-- <p class="group-content">Reference is {{group.ref}}</p> -->
-      <p class="group-content">Group data is {{group.data['name']}}</p>
-    </div>
-  }
-  <ion-button class="join-group-button" [routerLink]="['/join-group']">Create/Join Group</ion-button>
-</ion-content>
+      <!-- <p class="group-content">Group data is {{group.data['name']}}</p> -->
+    <!-- </div> -->
+  <!-- } -->
+  <!-- <ion-button class="join-group-button" [routerLink]="['/join-group']">Create/Join Group</ion-button> -->
+<!-- </ion-content> -->
