@@ -53,12 +53,12 @@ export class AuthService {
   }
 
   // Handle Sign Up
-  signup(email: string, password: string, username: string) {
+  signup(email: string, password: string, username: string, bio: string) {
     createUserWithEmailAndPassword(this.auth, email, password)
     .then((userCredential) => {
       // User Created 
       // if the user was successfully created, also store their username in the database
-      const userRef = this.firestoreService.createUser(email, username);
+      const userRef = this.firestoreService.createUser(email, username, bio);
       // route to a new page if sign up is successful
       userRef.then((docRef) => { 
         if (docRef) {

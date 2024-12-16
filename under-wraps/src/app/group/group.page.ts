@@ -1,9 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { collection, query, collectionData } from '@angular/fire/firestore';
+import { collection, query, collectionData, DocumentData, DocumentReference, where  } from '@angular/fire/firestore';
 import { FirestoreService } from '../services/firestore.service';
 import { AuthService } from '../services/auth.service';
-import { Observable, EMPTY } from 'rxjs';
-import { DocumentData, DocumentReference, where } from 'firebase/firestore';
+// import { Observable, EMPTY } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
@@ -34,6 +33,7 @@ export class GroupPage implements OnInit {
 
   /**
    * Update this.groupList to contain all the groups that the current user is a part of.
+   * Similar to the getUsers method in main.page.ts
    */
   private async getGroups() {
     if (this.currentUser) {
