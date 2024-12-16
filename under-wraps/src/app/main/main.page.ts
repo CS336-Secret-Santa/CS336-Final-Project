@@ -17,6 +17,7 @@ export class MainPage implements OnInit {
   auth: AuthService = inject(AuthService);
 
   groupCode: string = "code";
+  groupData: DocumentData | false = false;
   isAdmin: boolean = false;
   userList: {ref: DocumentReference<DocumentData, DocumentData>, data:DocumentData}[] = [];
   router: Router = inject(Router);
@@ -60,6 +61,7 @@ export class MainPage implements OnInit {
     if (this.groupCode) {
       const groupQuery: DocumentData | false = await this.firestore.getGroupDataByCode(this.groupCode);
       if (groupQuery) {
+        this.groupData = groupQuery;
         this.isAdmin = groupQuery['admin'].path === this.auth.currentUser?.path ? true : false;
         // create an array of user references (for this group)
         const groupRef: DocumentReference | false = await this.firestore.getGroupRefByCode(this.groupCode);
