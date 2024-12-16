@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-main',
@@ -8,6 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class MainPage implements OnInit {
   groupCode: string = "code";
+  router: Router = inject(Router);
 
   // Define the alert buttons as a class property
   public alertButtons = [

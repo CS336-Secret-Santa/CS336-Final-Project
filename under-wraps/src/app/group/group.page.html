@@ -4,10 +4,11 @@
     <h1> Gift Exchange Groups </h1>
   </div>
   <div class = "header-right">
-    <ion-button class = "logout-button" size = "small"> Log Out </ion-button>
+    <ion-button class = "logout-button" size = "small" (click)="this.router.navigate(['/home']);"> Log Out </ion-button>
   </div>
   </div>
 
+  <!-- TO-DO: Button onclick color is default ios blue right now. Look into changing it. -->
   <div class = "join-group-button-div">
     <ion-button class="join-group-button" size = "medium" [routerLink]="['/join-group']">
     Create Or Join Group</ion-button>

@@ -2,10 +2,12 @@
   <div class = "header">
   <div class = "header-left">
     <h1> FAMILY</h1>
-    <h5> {{this.groupCode}}</h5>
+    <h6> Code: {{this.groupCode}}</h6>
   </div>
+
   <div class = "header-right">
-    <ion-button class = "logout-button" size = "small"> Log Out </ion-button>
+     <!-- TO-DO: Button onclick color is default ios blue right now. Look into changing it. -->
+    <ion-button class = "leavegroup-button" size = "small" (click)="this.router.navigate(['/group']);"> Leave Group </ion-button>
   </div>
   </div>
 
@@ -22,7 +24,7 @@
           </div>
           <div class="member-card-header-div">
             <ion-card-header>
-              <ion-card-title>STEVEN</ion-card-title>
+              <ion-card-title>Steven</ion-card-title>
             </ion-card-header>
             <ion-card-content>
               Here's a small text description for the card content. Nothing more, nothing less.
@@ -48,7 +50,7 @@
           </div>
           <div class="member-card-header-div">
             <ion-card-header>
-              <ion-card-title>HALEEMA</ion-card-title>
+              <ion-card-title>Haleema</ion-card-title>
             </ion-card-header>
             <ion-card-content>
               Here's a small text description for the card content. Nothing more, nothing less.
@@ -73,7 +75,7 @@
           </div>
           <div class="member-card-header-div">
             <ion-card-header>
-              <ion-card-title>NISCHU</ion-card-title>
+              <ion-card-title>Nischu</ion-card-title>
             </ion-card-header>
             <ion-card-content>
               Here's a small text description for the card content. Nothing more, nothing less.
@@ -98,7 +100,7 @@
           </div>
           <div class="member-card-header-div">
             <ion-card-header>
-              <ion-card-title>ALINA</ion-card-title>
+              <ion-card-title>Alina</ion-card-title>
             </ion-card-header>
             <ion-card-content>
               Here's a small text description for the card content. Nothing more, nothing less.
@@ -123,7 +125,7 @@
           </div>
           <div class="member-card-header-div">
             <ion-card-header>
-              <ion-card-title>NICKI</ion-card-title>
+              <ion-card-title>Nicki</ion-card-title>
             </ion-card-header>
             <ion-card-content>
               Here's a small text description for the card content. Nothing more, nothing less.
@@ -148,7 +150,7 @@
           </div>
           <div class="member-card-header-div">
             <ion-card-header>
-              <ion-card-title>BEN</ion-card-title>
+              <ion-card-title>Ben</ion-card-title>
             </ion-card-header>
             <ion-card-content>
               Here's a small text description for the card content. Nothing more, nothing less.
@@ -173,7 +175,7 @@
           </div>
           <div class="member-card-header-div">
             <ion-card-header>
-              <ion-card-title>PAUL</ion-card-title>
+              <ion-card-title>Paul</ion-card-title>
             </ion-card-header>
             <ion-card-content>
               Here's a small text description for the card content. Nothing more, nothing less.
@@ -198,7 +200,7 @@
           </div>
           <div class="member-card-header-div">
             <ion-card-header>
-              <ion-card-title>DAVID</ion-card-title>
+              <ion-card-title>David</ion-card-title>
             </ion-card-header>
             <ion-card-content>
               Here's a small text description for the card content. Nothing more, nothing less.
@@ -223,7 +225,7 @@
           </div>
           <div class="member-card-header-div">
             <ion-card-header>
-              <ion-card-title>JOHN</ion-card-title>
+              <ion-card-title>John</ion-card-title>
             </ion-card-header>
             <ion-card-content>
               Here's a small text description for the card content. Nothing more, nothing less.
@@ -248,7 +250,7 @@
           </div>
           <div class="member-card-header-div">
             <ion-card-header>
-              <ion-card-title>ELI</ion-card-title>
+              <ion-card-title>Eli</ion-card-title>
             </ion-card-header>
             <ion-card-content>
               Here's a small text description for the card content. Nothing more, nothing less.
