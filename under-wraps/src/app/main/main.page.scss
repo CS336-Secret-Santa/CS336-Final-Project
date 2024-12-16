@@ -14,7 +14,8 @@ ion-content {
 
   // border: 2px solid black;
   justify-content:space-between;
-  background-color: #FFE5B4;
+  // background-color: #FFE5B4;
+  background-color: #fbd3d3;
   margin-bottom: 7px;
 }
 
@@ -28,19 +29,30 @@ ion-content {
   // border: 2px solid black;
 }
 
-.logout-button {
+
+.leavegroup-button {
+  --background: #8B0000;
+  --color: rgb(255, 248, 248);
+  font-weight: bold;
   margin-top: 46px;
   // border: 2px solid black;
 }
 
 h1 {
+  font-family: Candara;
   font-size: 2rem;
   font-weight: bold;
+  color: #8B0000;
   margin-bottom: -20px;
   // border: 2px solid black;
-  color: #2c3e50;
+  // color: #2c3e50;
 }
 
+
+h6 {
+  // border: 2px solid black;
+  font-weight: bold;
+}
 // Don't remove
 // h5 {
 //   border: 2px solid black;
@@ -105,7 +117,9 @@ h1 {
 
 .member-card-header-div ion-card-title {
   margin: 5px;
+  color: #8B0000;
   font-size:large;
+  align-self: center;
   // border: 2px solid black;
 }
 
@@ -130,7 +144,7 @@ h1 {
 .admin-text h2 {
   font-size: 32px;
   font-weight: bold;
-  color: #2c3e50;
+  color: #373737;
   // border: 2px solid black;
 }
 
@@ -142,6 +156,8 @@ h1 {
 }
 
 #disband-button {
+  --background: #8B0000;
+  --color: rgb(255, 248, 248);
   font-size: 16px;
   width: 100px;
   height: 50px;
@@ -150,6 +166,8 @@ h1 {
 }
 
 #match-button {
+  --background: #8B0000;
+  --color: rgb(255, 248, 248);
   font-size: 16px;
   width: 100px;
   height: 50px;

@@ -1,9 +1,11 @@
-import { Component, OnInit, inject } from '@angular/core';
+
+import { Component, inject, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DocumentReference, DocumentData, getDocs } from '@angular/fire/firestore';
 import { FirestoreService } from '../services/firestore.service';
 import { collection, QuerySnapshot } from 'firebase/firestore';
 import { AuthService } from '../services/auth.service';
+
 
 @Component({
   selector: 'app-main',
@@ -17,6 +19,7 @@ export class MainPage implements OnInit {
   groupCode: string = "code";
   isAdmin: boolean = false;
   userList: {ref: DocumentReference<DocumentData, DocumentData>, data:DocumentData}[] = [];
+  router: Router = inject(Router);
 
   // Define the alert buttons as a class property
   public alertButtons = [
