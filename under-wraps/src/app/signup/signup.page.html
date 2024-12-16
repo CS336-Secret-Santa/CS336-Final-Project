@@ -1,20 +1,18 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>signup</ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">signup</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <ion-input label="username" [(ngModel)]="this.username"></ion-input>
-  <ion-input label="bio" [(ngModel)]="this.bio"></ion-input>
-  <ion-input label="email" [(ngModel)]="this.email"></ion-input>
-  <ion-input label="password" type="password" [(ngModel)]="this.password"></ion-input>
-
-  <ion-button expand="block" (click)="validateSignup()">Sign Up</ion-button>
+<ion-content>
+  <div class = "signup-card-div">
+    <div class = "signup-card">
+      <div class ="signup-content">
+        <ion-text>
+          <h1>UnderWraps</h1>
+        </ion-text>
+        <ion-input label="Username" [(ngModel)]="this.username"></ion-input>
+        <ion-input label="Bio" [(ngModel)]="this.bio"></ion-input>
+        <ion-input label="Email" [(ngModel)]="this.email"></ion-input>
+        <ion-input label="Password" type="password" [(ngModel)]="this.password"></ion-input>
+        <ion-button expand="block" (click)="validateSignup()">Sign Up</ion-button>
+      </div>
+      </div>
+  </div>
 </ion-content>

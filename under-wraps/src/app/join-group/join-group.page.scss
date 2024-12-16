@@ -1,3 +1,49 @@
-ion-input {
-    border: solid 1px black;
-}
+.joingroup-card-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  .joingroup-card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 24px;
+    width: 90%;
+    max-width: 400px;
+  }
+
+  .joingroup-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  .joingroup-content h1 {
+    font-family: Candara;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: -10px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #8B0000; /* Deep red color */
+  }
+
+  ion-input {
+    --padding-start: 8px;
+    margin-bottom: 16px;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    --placeholder-color: #888888;
+  }
+
+  ion-button {
+    --background: #8B0000; /* Deep red color */
+    --border-radius: 8px;
+    --color: white;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 8px; /* Spacing between buttons and inputs */
+  }

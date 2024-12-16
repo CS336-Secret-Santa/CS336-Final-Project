@@ -1,3 +1,46 @@
-ion-input {
-    border: solid 1px black;
-}
+
+
+.login-card-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // border: 2px solid black;
+    height: 100%;
+  }
+
+  .login-card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 24px;
+    width: 90%;
+    max-width: 400px;
+    // border: 2px solid black;
+  }
+
+  .login-content h1 {
+    // border: 2px solid black;
+    font-family: Candara;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: -10px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #8B0000;
+  }
+
+  ion-input {
+    --padding-start: 8px;
+    margin-bottom: 16px;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    --placeholder-color: #888888;
+  }
+
+
+  ion-button {
+    --background: #8B0000;
+    --border-radius: 8px;
+    --color: white;
+    font-size: 16px;
+    font-weight: bold;
+  }
