@@ -84,12 +84,13 @@ export class FirestoreService {
    * 
    * @param email the user's email
    * @param username the user's username
+   * @param bio the user's bio
    * @returns the user's document OR false if an error occurred
   */ 
-  async createUser(email: string, username: string) {
+  async createUser(email: string, username: string, bio: string) {
     try {
       // create user
-      const docRef = await addDoc(this.userColl, { email: email, username: username, timestamp: new Date(Date.now()).toLocaleString() });
+      const docRef = await addDoc(this.userColl, { email: email, username: username, bio: bio, timestamp: new Date(Date.now()).toLocaleString() });
       return docRef; // return the actual data from the document, not the reference.
     }
     catch (e) {
@@ -322,18 +323,47 @@ export class FirestoreService {
    * @param code a unique code for a group
    * @returns a reference to the group's document OR false if an error occurred
    */
-  async getGroupByCode(code: string) {
+  private async getGroupByCode(code: string) {
     try {
       // get group by code
       const queryRes = query(this.groupColl, where("code", "==", code))
       const querySnapshot = await getDocs(queryRes);
-      return querySnapshot.docs[0].ref;
+      return querySnapshot.docs[0];
     }
     catch (e) {
       console.error(e); //note: sometimes this error is intentional, such as when it is called by joinGroupByCode()
       return false;
     }
   }
+
+  async getGroupRefByCode(code: string) {
+    const groupSnapshot = await this.getGroupByCode(code);
+    if (groupSnapshot) {
+      return groupSnapshot.ref;
+    } else {
+      return false;
+    }
+  }
+
+  async getGroupDataByCode(code: string) {
+    const groupSnapshot = await this.getGroupByCode(code);
+    if (groupSnapshot) {
+      // the main data from the group
+      const groupData =  groupSnapshot.data();
+      // also retrieve all the members within the group (stored in a subcollection)
+      const members = await this.getUserDataByGroup(groupSnapshot.ref);
+      if (members) {
+        groupData['Members'] = members;
+        return groupData;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  
 
   /**
    * Add a user to a group using the group's unique code
@@ -344,7 +374,7 @@ export class FirestoreService {
   async joinGroupByCode(code: string, user: DocumentReference) {
     // join a group by its unique code
     try {
-      const group = await this.getGroupByCode(code)
+      const group = await this.getGroupRefByCode(code)
         // if a group with this code exists, add the user to the group
         if (group) {
           const groupData = await this.convertRefToDocData(group);

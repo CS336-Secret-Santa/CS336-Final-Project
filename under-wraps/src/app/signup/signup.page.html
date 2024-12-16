@@ -1,4 +1,5 @@
 
+
 <ion-content>
   <div class = "signup-card-div">
     <div class = "signup-card">
@@ -7,6 +8,7 @@
           <h1>UnderWraps</h1>
         </ion-text>
         <ion-input label="Username" [(ngModel)]="this.username"></ion-input>
+        <ion-input label="Bio" [(ngModel)]="this.bio"></ion-input>
         <ion-input label="Email" [(ngModel)]="this.email"></ion-input>
         <ion-input label="Password" type="password" [(ngModel)]="this.password"></ion-input>
         <ion-button expand="block" (click)="validateSignup()">Sign Up</ion-button>

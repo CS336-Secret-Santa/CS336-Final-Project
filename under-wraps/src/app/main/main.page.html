@@ -1,287 +1,80 @@
 <ion-content>
   <div class = "header">
-  <div class = "header-left">
-    <h1> FAMILY</h1>
-    <h6> Code: {{this.groupCode}}</h6>
-  </div>
-
-  <div class = "header-right">
-     <!-- TO-DO: Button onclick color is default ios blue right now. Look into changing it. -->
-    <ion-button class = "leavegroup-button" size = "small" (click)="this.router.navigate(['/group']);"> Leave Group </ion-button>
-  </div>
+    <div class = "header-left">
+      <!-- if groupData has loaded (see getUsers()) and is no longer false -->
+      @if (this.groupData) {
+        <h1> {{this.groupData['name']}}</h1>
+      }
+      <h6> Code: {{this.groupCode}}</h6>
+    </div>
+    @if (!this.isAdmin) {
+      <div class = "header-right">
+        <!-- TO-DO: Button onclick color is default ios blue right now. Look into changing it. -->
+        <ion-button class = "leavegroup-button" size = "small" (click)="this.router.navigate(['/group']);"> Leave Group </ion-button>
+      </div>
+    }
   </div>
 
   <div class = "all-member-card-div">
+    @for (user of this.userList; track $index) {
+        <ion-item-sliding>
+        <ion-item>
+          <ion-card class="member-card">
+            <div class="image-div">
+              @let pic = user.data['profilePic'];
+              @if (pic === 'boy') {
+                <img
+                  src="https://img.freepik.com/premium-vector/cute-little-boy-santa-with-gift-icon-element_456987-177.jpg?w=740"
+                  alt="Cute Little Boy"
+                />
+              } @else if (pic === 'girl'){
+                <img
+                  src="https://img.freepik.com/premium-vector/cute-little-girl-with-christmas-gift-cartoon-illustration_456987-171.jpg?w=740"
+                  alt="Cute Little Girl"
+                />
+              } @else {
+                <img
+                  src="https://img.freepik.com/premium-vector/cute-little-boy-santa-with-gift-icon-element_456987-177.jpg?w=740"
+                  alt="Cute Little Boy"
+                />
+              }
+            </div>
+            <div class="member-card-header-div">
+              <ion-card-header>
+                <ion-card-title>{{user.data['username']}}</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                {{user.data['bio']}}
+              </ion-card-content>
+            </div>
+          </ion-card>
+        </ion-item>
 
-    <ion-item-sliding>
-      <ion-item>
-        <ion-card class="member-card">
-          <div class="image-div">
-            <img
-              src="https://img.freepik.com/premium-vector/cute-little-boy-santa-with-gift-icon-element_456987-177.jpg?w=740"
-              alt="Cute Little Boy"
-            />
-          </div>
-          <div class="member-card-header-div">
-            <ion-card-header>
-              <ion-card-title>Steven</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              Here's a small text description for the card content. Nothing more, nothing less.
-            </ion-card-content>
-          </div>
-        </ion-card>
-      </ion-item>
-
-      <ion-item-options side="end">
-        <ion-item-option color="danger">Delete</ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-
-
-    <ion-item-sliding>
-      <ion-item>
-        <ion-card class="member-card">
-          <div class="image-div">
-            <img
-              src="https://img.freepik.com/premium-vector/cute-little-girl-with-christmas-gift-cartoon-illustration_456987-171.jpg?w=740"
-              alt="Cute Little GirL"
-            />
-          </div>
-          <div class="member-card-header-div">
-            <ion-card-header>
-              <ion-card-title>Haleema</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              Here's a small text description for the card content. Nothing more, nothing less.
-            </ion-card-content>
-          </div>
-        </ion-card>
-      </ion-item>
-
-      <ion-item-options side="end">
-        <ion-item-option color="danger">Delete</ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-
-    <ion-item-sliding>
-      <ion-item>
-        <ion-card class="member-card">
-          <div class="image-div">
-            <img
-              src="https://img.freepik.com/premium-vector/cute-little-girl-with-christmas-gift-cartoon-illustration_456987-171.jpg?w=740"
-              alt="Cute Little Girl"
-            />
-          </div>
-          <div class="member-card-header-div">
-            <ion-card-header>
-              <ion-card-title>Nischu</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              Here's a small text description for the card content. Nothing more, nothing less.
-            </ion-card-content>
-          </div>
-        </ion-card>
-      </ion-item>
-
-      <ion-item-options side="end">
-        <ion-item-option color="danger">Delete</ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-
-    <ion-item-sliding>
-      <ion-item>
-        <ion-card class="member-card">
-          <div class="image-div">
-            <img
-              src="https://img.freepik.com/premium-vector/cute-little-girl-with-christmas-gift-cartoon-illustration_456987-171.jpg?w=740"
-              alt="Cute Little Girl"
-            />
-          </div>
-          <div class="member-card-header-div">
-            <ion-card-header>
-              <ion-card-title>Alina</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              Here's a small text description for the card content. Nothing more, nothing less.
-            </ion-card-content>
-          </div>
-        </ion-card>
-      </ion-item>
-
-      <ion-item-options side="end">
-        <ion-item-option color="danger">Delete</ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-
-    <ion-item-sliding>
-      <ion-item>
-        <ion-card class="member-card">
-          <div class="image-div">
-            <img
-              src="https://img.freepik.com/premium-vector/cute-little-girl-with-christmas-gift-cartoon-illustration_456987-171.jpg?w=740"
-              alt="Cute Little Girl"
-            />
-          </div>
-          <div class="member-card-header-div">
-            <ion-card-header>
-              <ion-card-title>Nicki</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              Here's a small text description for the card content. Nothing more, nothing less.
-            </ion-card-content>
-          </div>
-        </ion-card>
-      </ion-item>
-
-      <ion-item-options side="end">
-        <ion-item-option color="danger">Delete</ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-
-    <ion-item-sliding>
-      <ion-item>
-        <ion-card class="member-card">
-          <div class="image-div">
-            <img
-              src="https://img.freepik.com/premium-vector/cute-little-boy-santa-with-gift-icon-element_456987-177.jpg?w=740"
-              alt="Cute Little Boy"
-            />
-          </div>
-          <div class="member-card-header-div">
-            <ion-card-header>
-              <ion-card-title>Ben</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              Here's a small text description for the card content. Nothing more, nothing less.
-            </ion-card-content>
-          </div>
-        </ion-card>
-      </ion-item>
-
-      <ion-item-options side="end">
-        <ion-item-option color="danger">Delete</ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-
-    <ion-item-sliding>
-      <ion-item>
-        <ion-card class="member-card">
-          <div class="image-div">
-            <img
-              src="https://img.freepik.com/premium-vector/cute-little-boy-santa-with-gift-icon-element_456987-177.jpg?w=740"
-              alt="Cute Little Boy"
-            />
-          </div>
-          <div class="member-card-header-div">
-            <ion-card-header>
-              <ion-card-title>Paul</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              Here's a small text description for the card content. Nothing more, nothing less.
-            </ion-card-content>
-          </div>
-        </ion-card>
-      </ion-item>
-
-      <ion-item-options side="end">
-        <ion-item-option color="danger">Delete</ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-
-    <ion-item-sliding>
-      <ion-item>
-        <ion-card class="member-card">
-          <div class="image-div">
-            <img
-              src="https://img.freepik.com/premium-vector/cute-little-boy-santa-with-gift-icon-element_456987-177.jpg?w=740"
-              alt="Cute Little Boy"
-            />
-          </div>
-          <div class="member-card-header-div">
-            <ion-card-header>
-              <ion-card-title>David</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              Here's a small text description for the card content. Nothing more, nothing less.
-            </ion-card-content>
-          </div>
-        </ion-card>
-      </ion-item>
-
-      <ion-item-options side="end">
-        <ion-item-option color="danger">Delete</ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-
-    <ion-item-sliding>
-      <ion-item>
-        <ion-card class="member-card">
-          <div class="image-div">
-            <img
-              src="https://img.freepik.com/premium-vector/cute-little-boy-santa-with-gift-icon-element_456987-177.jpg?w=740"
-              alt="Cute Little Boy"
-            />
-          </div>
-          <div class="member-card-header-div">
-            <ion-card-header>
-              <ion-card-title>John</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              Here's a small text description for the card content. Nothing more, nothing less.
-            </ion-card-content>
-          </div>
-        </ion-card>
-      </ion-item>
-
-      <ion-item-options side="end">
-        <ion-item-option color="danger">Delete</ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-
-    <ion-item-sliding>
-      <ion-item>
-        <ion-card class="member-card">
-          <div class="image-div">
-            <img
-              src="https://img.freepik.com/premium-vector/cute-little-boy-santa-with-gift-icon-element_456987-177.jpg?w=740"
-              alt="Cute Little Boy"
-            />
-          </div>
-          <div class="member-card-header-div">
-            <ion-card-header>
-              <ion-card-title>Eli</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              Here's a small text description for the card content. Nothing more, nothing less.
-            </ion-card-content>
-          </div>
-        </ion-card>
-      </ion-item>
-
-      <ion-item-options side="end">
-        <ion-item-option color="danger">Delete</ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
+        <ion-item-options side="end">
+          <ion-item-option color="danger">Delete</ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    }
   </div>
 
-  <div class = "admin-nav-bar">
-    <div class = "admin-text">
-      <h2> ADMIN </h2>
+  @if (this.isAdmin) {
+    <div class = "admin-nav-bar">
+      <div class = "admin-text">
+        <h2> ADMIN </h2>
+      </div>
+  
+      <div class = "management-button-div">
+        <ion-button id="disband-button">
+          Disband Group
+        </ion-button>
+        <ion-alert trigger="disband-button" header="Are you sure?" [buttons]="disbandButtons"></ion-alert>
+        <ion-button id="match-button">
+          Match Members
+        </ion-button>
+        <ion-alert trigger="match-button" class="custom-alert" header="Are you sure?" [buttons]="matchButtons"></ion-alert>
+      </div>
     </div>
-
-    <div class = "management-button-div">
-      <ion-button id="disband-button">
-        Disband Group
-      </ion-button>
-      <ion-alert trigger="disband-button" header="Are you sure?" [buttons]="alertButtons"></ion-alert>
-      <ion-button id="match-button">
-        Match Members
-      </ion-button>
-      <ion-alert trigger="match-button" class="custom-alert" header="Are you sure?" [buttons]="alertButtons"></ion-alert>
-    </div>
-
-  </div>
+  }
 </ion-content>
 
 

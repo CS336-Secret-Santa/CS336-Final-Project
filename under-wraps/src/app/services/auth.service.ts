@@ -14,7 +14,7 @@ export class AuthService {
 
   currentUser: DocumentReference | null = null;
   constructor(private router: Router, private toastController: ToastController) { 
-    this.currentUser = doc(this.firestoreService.firestore, 'Users/H4lfkQS9fCWrpYj7lmxX'); // get the current user
+    this.currentUser = doc(this.firestoreService.firestore, 'Users/4Ubq0C8QQ5aAL7HH2lCv'); // get the current user
   }
 
   // code based on https://firebase.google.com/docs/auth/web/password-auth
@@ -53,19 +53,19 @@ export class AuthService {
   }
 
   // Handle Sign Up
-  signup(email: string, password: string, username: string) {
+  signup(email: string, password: string, username: string, bio: string) {
     createUserWithEmailAndPassword(this.auth, email, password)
     .then((userCredential) => {
       // User Created 
       // if the user was successfully created, also store their username in the database
-      const userRef = this.firestoreService.createUser(email, username);
+      const userRef = this.firestoreService.createUser(email, username, bio);
       // route to a new page if sign up is successful
       userRef.then((docRef) => { 
         if (docRef) {
           // save the document reference for the current user
           this.currentUser = docRef;
           // this page should also be restricted to authorized users
-          this.router.navigate(['/join-group']);
+          this.router.navigate(['/group']);
         }
       });
     })

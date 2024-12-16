@@ -18,22 +18,36 @@ export class JoinGroupPage implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
+    void 0; // do nothing
   }
 
-  createGroup() {
+  async createGroup() {
     // create a new group
     const creatorRef = this.authService.currentUser;
     if (creatorRef) {
-      const groupRef = this.firestoreService.createGroup(this.groupName, creatorRef);
+      const groupRef = await this.firestoreService.createGroup(this.groupName, creatorRef);
+      if (groupRef) {
+        const groupData = await this.firestoreService.convertRefToDocData(groupRef);
+        if (groupData) {
+          this.router.navigate([`/main/${groupData['code']}`]); // this page should also be restricted to authorized users
+        } else {
+          console.log("Group data not found.");
+        }
+      } else {
+        console.log("Group reference not found.");
+      }
+    } else {
+      // When a user cannot be found based on the id found in the auth service
+      console.log(`No user found. Current user: ${this.authService.currentUser}`);
+      this.firestoreService.showErrorToast("You must be logged in to create a group.");
     }
-    this.router.navigate(['/main']); // this page should also be restricted to authorized users
   }
   async joinGroup() {
     // join an existing group
     const creatorRef = this.authService.currentUser;
     if (creatorRef) {
       const success = await this.firestoreService.joinGroupByCode(this.groupCode, creatorRef);
-      if (success) this.router.navigate(['/main']) // this page should also be restricted to authorized users
+      if (success) this.router.navigate([`/main/${this.groupCode}`]) // this page should also be restricted to authorized users
     } else {
       // When a user cannot be found based on the id found in the auth service
       console.log(`No user found. Current user: ${this.authService.currentUser}`);
