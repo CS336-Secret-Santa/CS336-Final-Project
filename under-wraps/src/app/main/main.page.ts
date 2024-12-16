@@ -23,7 +23,7 @@ export class MainPage implements OnInit {
   router: Router = inject(Router);
 
   // Define the alert buttons as a class property
-  public alertButtons = [
+  public disbandButtons = [
     {
       text: 'No',
       role: 'cancel', // Dismisses the alert when clicked
@@ -37,10 +37,60 @@ export class MainPage implements OnInit {
     },
   ];
 
+  public matchButtons = [
+    {
+      text: 'No',
+      role: 'cancel', // Dismisses the alert when clicked
+    },
+    {
+      text: 'Yes',
+      handler: () => {
+        console.log('Group disbanded');
+        this.matchGroup();
+      },
+    },
+  ];
+
   // Method for disbanding group
-  disbandGroup() {
+  async disbandGroup() {
     console.log('Performing group disband action...');
-    // Add your disband logic here
+    const groupRef = await this.firestore.getGroupRefByCode(this.groupCode);
+    if (groupRef) {
+      this.firestore.deleteGroup(groupRef);
+      this.router.navigate(['/group']);
+    }
+  }
+  
+ 
+  async matchGroup() {
+    console.log('Performing group match action...');
+    const data = this.userList;
+    if (data.length < 2) {
+        throw new Error("Array must have at least two elements to create matches.");
+    }
+
+    // Create a shuffled copy of the array
+    const shuffled = [...data];
+    shuffled.sort(() => Math.random() - 0.5);
+
+    // Ensure no element is mapped to itself
+    for (let i = 0; i < data.length; i++) {
+        if (data[i] === shuffled[i]) {
+            // Swap with the next element (or the first element if it's the last one)
+            const swapIndex = (i + 1) % data.length;
+            [shuffled[i], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[i]];
+        }
+    }
+
+    // save matches
+    const groupRef = await this.firestore.getGroupRefByCode(this.groupCode);
+    if (groupRef) {
+      for (let i = 0; i < data.length; i++) {
+        const userRef = data[i].ref;
+        const matchRef = shuffled[i].ref;
+        this.firestore.assignMatch(userRef, groupRef, matchRef);
+      }
+    }
   }
 
 
@@ -94,5 +144,6 @@ export class MainPage implements OnInit {
       this.firestore.showErrorToast("No user logged in.");
     }
   }
+
 
 }
