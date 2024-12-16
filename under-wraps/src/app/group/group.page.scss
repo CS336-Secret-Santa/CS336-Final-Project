@@ -4,8 +4,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 16px;
-    // background-color: #f4f4f9;
-    background-color: #FFF1DC;
+    background-color: #fbd3d3;
+    // background-color: #f96576;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     // border: 2px solid black;
 }
@@ -35,42 +35,93 @@
 /* Logout button */
 .logout-button {
     --background: #8B0000;
-    --color: white;
+    --color: rgb(255, 248, 248);
     font-weight: bold;
     // border: 2px solid black;
 }
 
+
+.center-group-card{
+  display: flex;
+  justify-content: center;
+}
+
 .group-card {
-    display: flex;
-    justify-content:center;
-    margin-top: 0px;
-    margin-left: 4px;
-    margin-right: 8px;
-    margin-bottom: 2px;
-    // border: 2px solid black;
+  display: flex;
+  justify-content:center;
+  width: 90%;
+  margin-top: 3px;
+  margin-left: 4px;
+  margin-right: 8px;
+  margin-bottom: 2px;
+  // background-color: #FFE5B4;
+  // border: 2px solid black;
   }
 
   .image-div {
     // border: 2px solid black;
     margin: 8px;
-    width: 140px;
+    margin-left: 30px;
+    width: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
   .group-card img {
-    width: 60x;
-    height: 60px;
+    width: 80x;
+    height: 80px;
     object-fit: cover; /* Ensure the image fits nicely */
     border-radius: 50%;
     // border: 2px solid black;
   }
 
-  .member-card-header-div {
-    margin: 0px;
+  .group-card-header-div {
+    width: 70%;
+    margin: 8px;
     // border: 2px solid black;
   }
+
+  .group-card-header-div ion-card-header {
+    text-transform: uppercase;
+    padding: 0px;
+    text-align: center;
+    // border: 2px solid black;
+    margin-right: 2px;
+  }
+
+  .group-card-header-div ion-card-title {
+    color: #8B0000;
+    margin: 5px;
+    font-size:large;
+    // border: 2px solid black;
+  }
+
+  .group-card-header-div ion-card-content {
+    margin: 0px;
+    text-align: center;
+    padding: 0px;
+    font-size: small;
+    // border: 2px solid black;
+  }
+
+  .join-group-button-div {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    display: flex;
+    justify-content: center;
+    // border: 2px solid black;
+}
+
+  .join-group-button {
+    --background: #8B0000;
+    --color: rgb(255, 248, 248);
+    font-weight: bold;
+
+    // border: 2px solid black;
+}
+
+
 
 /* Ensure responsiveness */
 // @media (max-width: 600px) {

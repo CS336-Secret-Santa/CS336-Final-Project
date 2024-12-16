@@ -8,30 +8,35 @@
   </div>
   </div>
 
-  @for (group of this.groupList; track $index) {
-    <ion-card class="group-card" (click)="this.router.navigate(['/main', group.data['code']]);">
-      <div class="image-div">
-        <img
-          src="https://img.freepik.com/premium-vector/cute-little-boy-santa-with-gift-icon-element_456987-177.jpg?w=740"
-          alt="Cute Little Boy"
-        />
-      </div>
-      <div class="group-card-header-div">
-        <ion-card-header>
-          <ion-card-title>{{group.data['name']}}</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          Number of members
-          Date of Creation
-        </ion-card-content>
-      </div>
-    </ion-card>
+  <div class = "join-group-button-div">
+    <ion-button class="join-group-button" size = "medium" [routerLink]="['/join-group']">
+    Create Or Join Group</ion-button>
+  </div>
 
-    <div class="group" (click)="this.router.navigate(['/main', group.data['code']]);">
-    <p class="group-content">Group data is {{group.data['name']}}</p>
+
+  @for (group of this.groupList; track $index) {
+    <div class = "center-group-card">
+      <ion-card class="group-card" (click)="this.router.navigate(['/main', group.data['code']]);">
+        <div class="image-div">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/3209/3209955.png"
+            alt="Gift"
+          />
+        </div>
+        <div class="group-card-header-div">
+          <ion-card-header>
+            <ion-card-title>{{group.data['name']}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-card-subtitle>No. of Members</ion-card-subtitle>
+          </ion-card-content>
+          <ion-card-content>
+            <ion-card-subtitle>Group Matched</ion-card-subtitle>
+          </ion-card-content>
+        </div>
+      </ion-card>
     </div>
   }
-  <ion-button class="join-group-button" [routerLink]="['/join-group']">Create/Join Group</ion-button>
 </ion-content>
 
 
