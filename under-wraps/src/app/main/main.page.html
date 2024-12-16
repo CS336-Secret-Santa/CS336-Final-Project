@@ -1,95 +1,57 @@
 <ion-content>
   <div class = "header">
-
-  <div class = "header-left">
-    <h1> FAMILY</h1>
-    <h6> Code: {{this.groupCode}}</h6>
-  </div>
-  @if (!this.isAdmin) {
-    <div class = "header-right">
-       <!-- TO-DO: Button onclick color is default ios blue right now. Look into changing it. -->
-      <ion-button class = "leavegroup-button" size = "small" (click)="this.router.navigate(['/group']);"> Leave Group </ion-button>
+    <div class = "header-left">
+      <h1> FAMILY</h1>
+      <h6> Code: {{this.groupCode}}</h6>
     </div>
-  }
+    @if (!this.isAdmin) {
+      <div class = "header-right">
+        <!-- TO-DO: Button onclick color is default ios blue right now. Look into changing it. -->
+        <ion-button class = "leavegroup-button" size = "small" (click)="this.router.navigate(['/group']);"> Leave Group </ion-button>
+      </div>
+    }
   </div>
 
   <div class = "all-member-card-div">
     @for (user of this.userList; track $index) {
-    <ion-item-sliding>
-      <ion-item>
-        <ion-card class="member-card">
-          <div class="image-div">
-            @let pic = user.data['profilePic'];
-            @if (pic === 'boy') {
-              <img
-                src="https://img.freepik.com/premium-vector/cute-little-boy-santa-with-gift-icon-element_456987-177.jpg?w=740"
-                alt="Cute Little Boy"
-              />
-            } @else if (pic === 'girl'){
-              <img
-                src="https://img.freepik.com/premium-vector/cute-little-girl-with-christmas-gift-cartoon-illustration_456987-171.jpg?w=740"
-                alt="Cute Little Girl"
-              />
-            } @else {
-              <img
-                src="https://img.freepik.com/premium-vector/cute-little-boy-santa-with-gift-icon-element_456987-177.jpg?w=740"
-                alt="Cute Little Boy"
-              />
-            }
-          </div>
-          <div class="member-card-header-div">
-            <ion-card-header>
-              <ion-card-title>{{user.data['username']}}</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              {{user.data['bio']}}
-            </ion-card-content>
-          </div>
-        </ion-card>
-      </ion-item>
+        <ion-item-sliding>
+        <ion-item>
+          <ion-card class="member-card">
+            <div class="image-div">
+              @let pic = user.data['profilePic'];
+              @if (pic === 'boy') {
+                <img
+                  src="https://img.freepik.com/premium-vector/cute-little-boy-santa-with-gift-icon-element_456987-177.jpg?w=740"
+                  alt="Cute Little Boy"
+                />
+              } @else if (pic === 'girl'){
+                <img
+                  src="https://img.freepik.com/premium-vector/cute-little-girl-with-christmas-gift-cartoon-illustration_456987-171.jpg?w=740"
+                  alt="Cute Little Girl"
+                />
+              } @else {
+                <img
+                  src="https://img.freepik.com/premium-vector/cute-little-boy-santa-with-gift-icon-element_456987-177.jpg?w=740"
+                  alt="Cute Little Boy"
+                />
+              }
+            </div>
+            <div class="member-card-header-div">
+              <ion-card-header>
+                <ion-card-title>{{user.data['username']}}</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                {{user.data['bio']}}
+              </ion-card-content>
+            </div>
+          </ion-card>
+        </ion-item>
 
-      <ion-item-options side="end">
-        <ion-item-option color="danger">Delete</ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
+        <ion-item-options side="end">
+          <ion-item-option color="danger">Delete</ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
     }
-
-    <ion-item-sliding>
-      <ion-item>
-        <ion-card class="member-card">
-          <div class="image-div">
-            @let pic = user.data['profilePic'];
-            @if (pic === 'boy') {
-              <img
-                src="https://img.freepik.com/premium-vector/cute-little-boy-santa-with-gift-icon-element_456987-177.jpg?w=740"
-                alt="Cute Little Boy"
-              />
-            } @else if (pic === 'girl'){
-              <img
-                src="https://img.freepik.com/premium-vector/cute-little-girl-with-christmas-gift-cartoon-illustration_456987-171.jpg?w=740"
-                alt="Cute Little Girl"
-              />
-            } @else {
-              <img
-                src="https://img.freepik.com/premium-vector/cute-little-boy-santa-with-gift-icon-element_456987-177.jpg?w=740"
-                alt="Cute Little Boy"
-              />
-            }
-            
-          </div>
-          <div class="member-card-header-div">
-            <ion-card-header>
-              <ion-card-title>{{user.data['username']}}</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>{{user.data['bio']}}</ion-card-content>
-          </div>
-        </ion-card>
-      </ion-item>
-
-      <ion-item-options side="end">
-        <ion-item-option color="danger">Delete</ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
   </div>
 
   @if (this.isAdmin) {
@@ -110,7 +72,6 @@
       </div>
     </div>
   }
-  
 </ion-content>
 
 
