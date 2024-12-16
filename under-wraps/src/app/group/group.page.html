@@ -1,25 +1,43 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>group</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <div class = "header">
+  <div class = "header-left">
+    <h1> Gift Exchange Groups </h1>
+  </div>
+  <div class = "header-right">
+    <ion-button class = "logout-button" size = "small"> Log Out </ion-button>
+  </div>
+  </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">group</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class = "join-group-button-div">
+    <ion-button class="join-group-button" size = "medium" [routerLink]="['/join-group']">
+    Create Or Join Group</ion-button>
+  </div>
+
 
   @for (group of this.groupList; track $index) {
-    <!-- Placeholder for how each group will be displayed to the user -->
-    <!-- "group is an object with two values" -->
-      <!-- it contains a DocumentReference (in .ref) for accessing the group in the future -->
-      <!-- it contains a DocumentData (in .data) which has all of the fields contained within the group (see FirestoreService for details) -->
-    <div class="group" (click)="this.router.navigate(['/main', group.data['code']]);">
-      <!-- <p class="group-content">Reference is {{group.ref}}</p> -->
-      <p class="group-content">Group data is {{group.data['name']}}</p>
+    <div class = "center-group-card">
+      <ion-card class="group-card" (click)="this.router.navigate(['/main', group.data['code']]);">
+        <div class="image-div">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/3209/3209955.png"
+            alt="Gift"
+          />
+        </div>
+        <div class="group-card-header-div">
+          <ion-card-header>
+            <ion-card-title>{{group.data['name']}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-card-subtitle>No. of Members</ion-card-subtitle>
+          </ion-card-content>
+          <ion-card-content>
+            <ion-card-subtitle>Group Matched</ion-card-subtitle>
+          </ion-card-content>
+        </div>
+      </ion-card>
     </div>
   }
-  <ion-button class="join-group-button" [routerLink]="['/join-group']">Create/Join Group</ion-button>
 </ion-content>
+
+
+
