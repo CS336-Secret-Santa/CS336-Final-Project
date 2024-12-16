@@ -1,7 +1,10 @@
 <ion-content>
   <div class = "header">
     <div class = "header-left">
-      <h1> FAMILY</h1>
+      <!-- if groupData has loaded (see getUsers()) and is no longer false -->
+      @if (this.groupData) {
+        <h1> {{this.groupData['name']}}</h1>
+      }
       <h6> Code: {{this.groupCode}}</h6>
     </div>
     @if (!this.isAdmin) {
