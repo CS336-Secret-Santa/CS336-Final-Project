@@ -597,7 +597,7 @@ export class FirestoreService {
       const queryRes = query(collection(user, "Groups"), where("group", "==", group))
       // add the matched user to the document
       const querySnapshot = await getDocs(queryRes);
-      const currentGroup = querySnapshot.docs[0].ref;
+      const currentGroup: DocumentReference = querySnapshot.docs[0].ref;
       setDoc(currentGroup, { match: matchedUser }, { merge: true });
     }
     catch (e) {

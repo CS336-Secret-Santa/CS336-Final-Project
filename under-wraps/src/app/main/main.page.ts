@@ -45,7 +45,7 @@ export class MainPage implements OnInit {
     {
       text: 'Yes',
       handler: () => {
-        console.log('Group disbanded');
+        console.log('Group matched');
         this.matchGroup();
       },
     },
@@ -68,6 +68,8 @@ export class MainPage implements OnInit {
     if (data.length < 2) {
         throw new Error("Array must have at least two elements to create matches.");
     }
+    // extract the document references stored in Group/this-group-id/Members/member-id
+    // const data: DocumentReference[] = userData.map((doc) => { return doc.data['member']; });
 
     // Create a shuffled copy of the array
     const shuffled = [...data];
@@ -88,7 +90,7 @@ export class MainPage implements OnInit {
       for (let i = 0; i < data.length; i++) {
         const userRef = data[i].ref;
         const matchRef = shuffled[i].ref;
-        this.firestore.assignMatch(userRef, groupRef, matchRef);
+        this.firestore.assignMatch(groupRef, userRef, matchRef);
       }
     }
   }
@@ -124,7 +126,7 @@ export class MainPage implements OnInit {
             
             if (userRef) {
               const userRefData = await this.firestore.convertRefToDocData(userRef);
-              return {ref: doc.ref, data: userRefData};
+              return {ref: userRef, data: userRefData};
             }
             return false;
           });
