@@ -59,7 +59,7 @@
         </ion-item>
         @if (this.isAdmin) {
           <ion-item-options side="end">
-            <ion-item-option color="danger">Delete</ion-item-option>
+            <ion-item-option color="danger" (click)="removeUser(user.ref)">Delete</ion-item-option>
           </ion-item-options>
         }
       </ion-item-sliding>

@@ -519,7 +519,7 @@ export class FirestoreService {
 
   /**
    * Removes a user from a group and removes the group from the user's list of groups
-   * - Could be called when a user leaves a group, but the group still exists
+   * - Could be called when a user leaves a group, but the group and user still exist
    * 
    * @param group a reference to the group's document
    * @param user a reference to the user's document

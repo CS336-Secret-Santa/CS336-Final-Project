@@ -18,6 +18,7 @@ export class MainPage implements OnInit {
 
   groupCode: string = "code";
   groupData: DocumentData | false = false;
+  groupRef: DocumentReference | false = false;
   isAdmin: boolean = false;
   userList: {ref: DocumentReference<DocumentData, DocumentData>, data:DocumentData}[] = [];
   currentMatch: DocumentReference | false = false;
@@ -57,6 +58,7 @@ export class MainPage implements OnInit {
     console.log('Performing group disband action...');
     const groupRef = await this.firestore.getGroupRefByCode(this.groupCode);
     if (groupRef) {
+      this.firestore.removeGroupFromAllUsers(groupRef);
       this.firestore.deleteGroup(groupRef);
       this.router.navigate(['/group']);
     }
@@ -84,21 +86,19 @@ export class MainPage implements OnInit {
     }
 
     // save matches
-    const groupRef = await this.firestore.getGroupRefByCode(this.groupCode);
-    if (groupRef) {
+    if (this.groupRef) {
       for (let i = 0; i < data.length; i++) {
         const userRef = data[i].ref;
         const matchRef = shuffled[i].ref;
-        this.firestore.assignMatch(groupRef, userRef, matchRef);
+        this.firestore.assignMatch(this.groupRef, userRef, matchRef);
       }
     }
   }
 
   async getMatch() {
     const userRef = this.auth.currentUser;
-    const groupRef = await this.firestore.getGroupRefByCode(this.groupCode);
-    if (userRef && groupRef) {
-      const matchRef: DocumentReference = await this.firestore.getMatch(groupRef, userRef);
+    if (userRef && this.groupRef) {
+      const matchRef: DocumentReference = await this.firestore.getMatch(this.groupRef, userRef);
       if (matchRef) {
         console.log("Match found: " + matchRef.path);
         this.currentMatch = matchRef;
@@ -110,6 +110,12 @@ export class MainPage implements OnInit {
     } else {
       console.log("No user logged in or no group found.");
       this.currentMatch = false;
+    }
+  }
+
+  removeUser(userRef: DocumentReference) {
+    if (this.groupRef) {
+      this.firestore.unlinkGroupandUser(this.groupRef, userRef);
     }
   }
 
@@ -129,6 +135,7 @@ export class MainPage implements OnInit {
    */
   private async getUsers() {
     if (this.groupCode) {
+      this.groupRef = await this.firestore.getGroupRefByCode(this.groupCode);
       const groupQuery: DocumentData | false = await this.firestore.getGroupDataByCode(this.groupCode);
       if (groupQuery) {
         this.groupData = groupQuery;
