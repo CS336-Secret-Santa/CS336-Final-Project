@@ -57,7 +57,7 @@
             </div>
           </ion-card>
         </ion-item>
-        @if (this.isAdmin) {
+        @if (this.isAdmin && this.groupData && this.groupData['closed'] === false) {
           <ion-item-options side="end">
             <ion-item-option color="danger" (click)="removeUser(user.ref)">Delete</ion-item-option>
           </ion-item-options>
@@ -77,6 +77,7 @@
           Disband Group
         </ion-button>
         <ion-alert trigger="disband-button" header="Are you sure?" [buttons]="disbandButtons"></ion-alert>
+        <!-- [ngClass]="{'disabled': this.groupData && this.groupData['closed']}" -->
         <ion-button id="match-button">
           Match Members
         </ion-button>

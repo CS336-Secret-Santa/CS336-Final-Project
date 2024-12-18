@@ -92,6 +92,10 @@ export class MainPage implements OnInit {
         const matchRef = shuffled[i].ref;
         this.firestore.assignMatch(this.groupRef, userRef, matchRef);
       }
+      // close the group since it has been matched
+      this.firestore.setGroupClosed(this.groupRef, true);
+    } else {
+      console.log("No group found.");
     }
   }
 

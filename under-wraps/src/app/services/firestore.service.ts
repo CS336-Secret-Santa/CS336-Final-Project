@@ -426,6 +426,16 @@ export class FirestoreService {
     }
   }
 
+  setGroupClosed(group: DocumentReference, closed: boolean) {
+    // close or open a group
+    try {
+      setDoc(group, { closed: closed }, { merge: true });
+    }
+    catch (e) {
+      console.error(e);
+    }
+  }
+
   /**
    * Gets the data of a particular group a user is in
    * @param user the user we are getting data from
