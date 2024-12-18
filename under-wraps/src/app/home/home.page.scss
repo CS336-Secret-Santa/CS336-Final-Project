@@ -1,47 +1,78 @@
 
+
 .home-card {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: #ede0e0;
   display: flex;
   justify-content: center;
   align-items: center;
-  // border: 2px solid black;
-  height: 100%;
 }
 
+
 .home-content {
+  margin-top: 0rem;
+  position: relative;
+  z-index: 1000;
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+  justify-content: center;
+  background-color: rgb(255, 248, 248);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   border-radius: 12px;
-  padding: 24px;
+  padding: 0rem;
+  width: 80%;
+  max-width: 500px;
+  min-width: 280px;
+  height: 50vh;
+  max-height: 90%;
+  text-align: center;
+  box-sizing: border-box;
+  margin-bottom: 0rem;
   // border: 2px solid black;
-  width: 90%;
-  height: 50%;
 }
 
 
 h1 {
-  font-family: Candara;
+  // border: 2px solid black;
+  margin-top: 0rem;
+  font-family: Candara, sans-serif;
   color: #8B0000;
   font-weight: bold;
-  font-size: 36px;
-  // border: 2px solid black;
+  font-size: 2.2rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
 }
 
+
 h3 {
-  font-family: Candara;
+  // border: 2px solid black;
+  margin-top: 0.7rem;
+  font-family: Candara, sans-serif;
   color: #8B0000;
   font-weight: bold;
-  // border: 2px solid black;
-  font-size: 24px;
-  margin-bottom: 24px;
+  font-size: 1.5rem;
+  margin-bottom: 0.7rem;
+  text-align: center;
 }
+
 
 
 ion-button {
---background: #8B0000;
+  // border: 2px solid black;
+  --background: #8B0000;
   --border-radius: 8px;
   --color: white;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: bold;
+  margin: 0.5rem;
+  text-align: center;
 }
+
+
+

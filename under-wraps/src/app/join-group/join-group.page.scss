@@ -1,4 +1,7 @@
 .joingroup-card-div {
+    position: fix;
+    z-index: 1;
+    background-color:#ede0e0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -6,6 +9,9 @@
   }
 
   .joingroup-card {
+    position: relative;
+    z-index: 1000;
+    background-color: rgb(255, 248, 248);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     padding: 24px;
@@ -24,7 +30,7 @@
   .joingroup-content h1 {
     font-family: Candara;
     font-size: 24px;
-    font-weight: bold;
+    font-weight: bolder;
     margin-top: -10px;
     text-align: center;
     margin-bottom: 20px;
@@ -33,7 +39,7 @@
 
   ion-input {
     --padding-start: 8px;
-    margin-bottom: 16px;
+    // margin-bottom: 16px;
     border: 1px solid #cccccc;
     border-radius: 8px;
     --placeholder-color: #888888;
@@ -45,5 +51,5 @@
     --color: white;
     font-size: 16px;
     font-weight: bold;
-    margin-top: 8px; /* Spacing between buttons and inputs */
+    margin-bottom: 16px;
   }

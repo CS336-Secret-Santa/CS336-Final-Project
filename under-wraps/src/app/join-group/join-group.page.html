@@ -1,19 +1,13 @@
-
-
-
-
-
-
-  <div class = "joingroup-card-div">
-    <div class = "joingroup-card">
-      <div class ="joingroup-content">
-        <ion-text>
-          <h1>Create Or Join Group</h1>
-        </ion-text>
-        <ion-input label="Group Name" [(ngModel)]="groupName"></ion-input>
-        <ion-button (click)="createGroup()">Create</ion-button>
-        <ion-input label="Group Code" [(ngModel)]="groupCode"></ion-input>
-        <ion-button (click)="joinGroup()">Join</ion-button>
-      </div>
-      </div>
+<div class="joingroup-card-div">
+  <div class="joingroup-card">
+    <div class="joingroup-content">
+      <ion-text>
+        <h1>Create Or Join Group</h1>
+      </ion-text>
+      <ion-input label="Group Name" [(ngModel)]="groupName"></ion-input>
+      <ion-button (click)="createGroup()">Create Group</ion-button>
+      <ion-input label="Group Code" [(ngModel)]="groupCode"></ion-input>
+      <ion-button (click)="joinGroup()">Join Group</ion-button>
+    </div>
   </div>
+</div>
