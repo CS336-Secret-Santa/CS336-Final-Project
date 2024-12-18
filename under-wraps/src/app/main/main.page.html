@@ -46,13 +46,22 @@
               <ion-card-content>
                 {{user.data['bio']}}
               </ion-card-content>
+              <!-- placeholder. change logic to put this if statement over whatever should only show up if this user is the match -->
+               @if (this.currentMatch && this.currentMatch.id === user.ref.id) {
+                <ion-card-content>my match</ion-card-content>
+               }
+               <!-- placeholder for what should show if this is my card -->
+              @if (this.auth.currentUser && this.auth.currentUser.id === user.ref.id) {
+                <ion-card-content>my card</ion-card-content>
+              }
             </div>
           </ion-card>
         </ion-item>
-
-        <ion-item-options side="end">
-          <ion-item-option color="danger">Delete</ion-item-option>
-        </ion-item-options>
+        @if (this.isAdmin) {
+          <ion-item-options side="end">
+            <ion-item-option color="danger">Delete</ion-item-option>
+          </ion-item-options>
+        }
       </ion-item-sliding>
     }
   </div>

@@ -20,6 +20,7 @@ export class MainPage implements OnInit {
   groupData: DocumentData | false = false;
   isAdmin: boolean = false;
   userList: {ref: DocumentReference<DocumentData, DocumentData>, data:DocumentData}[] = [];
+  currentMatch: DocumentReference | false = false;
   router: Router = inject(Router);
 
   // Define the alert buttons as a class property
@@ -68,8 +69,6 @@ export class MainPage implements OnInit {
     if (data.length < 2) {
         throw new Error("Array must have at least two elements to create matches.");
     }
-    // extract the document references stored in Group/this-group-id/Members/member-id
-    // const data: DocumentReference[] = userData.map((doc) => { return doc.data['member']; });
 
     // Create a shuffled copy of the array
     const shuffled = [...data];
@@ -95,6 +94,24 @@ export class MainPage implements OnInit {
     }
   }
 
+  async getMatch() {
+    const userRef = this.auth.currentUser;
+    const groupRef = await this.firestore.getGroupRefByCode(this.groupCode);
+    if (userRef && groupRef) {
+      const matchRef: DocumentReference = await this.firestore.getMatch(groupRef, userRef);
+      if (matchRef) {
+        console.log("Match found: " + matchRef.path);
+        this.currentMatch = matchRef;
+      }
+      else {
+        console.log("No match found.");
+        this.currentMatch = false;
+      }
+    } else {
+      console.log("No user logged in or no group found.");
+      this.currentMatch = false;
+    }
+  }
 
   constructor(private route: ActivatedRoute) { }
 
@@ -103,6 +120,7 @@ export class MainPage implements OnInit {
       this.groupCode = params['code'];
     });
     this.getUsers();
+    this.getMatch();
   }
 
   /**
