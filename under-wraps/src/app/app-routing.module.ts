@@ -30,7 +30,11 @@ const routes: Routes = [
   {
     path: 'group',
     loadChildren: () => import('./group/group.module').then( m => m.GroupPageModule)
+  },  {
+    path: 'gift',
+    loadChildren: () => import('./gift/gift.module').then( m => m.GiftPageModule)
   },
+
 
 
 ];
