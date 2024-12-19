@@ -60,76 +60,77 @@
       </div>
     }
 
-
-  @if (this.isAdmin) {
-    <div class = "all-member-card-div-admin">
-      @for (user of this.userList; track $index) {
-          <ion-item-sliding>
-          <ion-item>
-            <ion-card class="member-card">
-              <div class="image-div">
-                @let pic = user.data['profilePic'];
-                @if (pic === 'boy') {
-                  <img
-                    src="https://img.freepik.com/premium-vector/cute-little-boy-santa-with-gift-icon-element_456987-177.jpg?w=740"
-                    alt="Cute Little Boy"
-                  />
-                } @else if (pic === 'girl'){
-                  <img
-                    src="https://img.freepik.com/premium-vector/cute-little-girl-with-christmas-gift-cartoon-illustration_456987-171.jpg?w=740"
-                    alt="Cute Little Girl"
-                  />
-                } @else {
-                  <img
-                    src="https://img.freepik.com/premium-vector/cute-little-boy-santa-with-gift-icon-element_456987-177.jpg?w=740"
-                    alt="Cute Little Boy"
-                  />
-                }
-              </div>
-              <div class="member-card-header-div">
-                <ion-card-header>
-                  <ion-card-title>{{user.data['username']}}</ion-card-title>
-                </ion-card-header>
-                <ion-card-content>
-                  {{user.data['bio']}}
-                </ion-card-content>
-                <!-- placeholder. change logic to put this if statement over whatever should only show up if this user is the match -->
-                 @if (this.currentMatch && this.currentMatch.id === user.ref.id) {
-                  <ion-card-content>my match</ion-card-content>
-                 }
-                 <!-- placeholder for what should show if this is my card -->
-                @if (this.auth.currentUser && this.auth.currentUser.id === user.ref.id) {
-                  <ion-card-content>my card</ion-card-content>
-                }
-              </div>
-            </ion-card>
-          </ion-item>
-             @if (this.groupData && this.groupData['closed'] === false) {
+@if (this.isAdmin){
+  <div class = "all-member-card-div-admin">
+    @for (user of this.userList; track $index) {
+      <ion-item-sliding>
+        <ion-item>
+          <ion-card class="member-card">
+            <div class="image-div">
+              @let pic = user.data['profilePic'];
+              @if (pic === 'boy') {
+                <img
+                  src="https://img.freepik.com/premium-vector/cute-little-boy-santa-with-gift-icon-element_456987-177.jpg?w=740"
+                  alt="Cute Little Boy"
+                />
+              } @else if (pic === 'girl'){
+                <img
+                  src="https://img.freepik.com/premium-vector/cute-little-girl-with-christmas-gift-cartoon-illustration_456987-171.jpg?w=740"
+                  alt="Cute Little Girl"
+                />
+              } @else {
+                <img
+                  src="https://img.freepik.com/premium-vector/cute-little-boy-santa-with-gift-icon-element_456987-177.jpg?w=740"
+                  alt="Cute Little Boy"
+                />
+              }
+            </div>
+            <div class="member-card-header-div">
+              <ion-card-header>
+                <ion-card-title>{{user.data['username']}}</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                {{user.data['bio']}}
+              </ion-card-content>
+              <!-- placeholder. change logic to put this if statement over whatever should only show up if this user is the match -->
+               @if (this.currentMatch && this.currentMatch.id === user.ref.id) {
+                <ion-card-content>my match</ion-card-content>
+               }
+               <!-- placeholder for what should show if this is my card -->
+              @if (this.auth.currentUser && this.auth.currentUser.id === user.ref.id) {
+                <ion-card-content>my card</ion-card-content>
+              }
+            </div>
+          </ion-card>
+        </ion-item>
+        @if (this.groupData && this.groupData['closed'] === false) {
           <ion-item-options side="end">
             <ion-item-option color="danger" (click)="removeUser(user.ref)">Delete</ion-item-option>
           </ion-item-options>
+        }
         </ion-item-sliding>
-      }
+    }
+  </div>
+
+  <div class = "admin-nav-bar">
+    <div class = "admin-text">
+      <h2> ADMIN </h2>
     </div>
 
-    <div class = "admin-nav-bar">
-      <div class = "admin-text">
-        <h2> ADMIN </h2>
-      </div>
-
-      <div class = "management-button-div">
-        <ion-button id="disband-button">
-          Disband Group
-        </ion-button>
-        <ion-alert trigger="disband-button" header="Are you sure?" [buttons]="disbandButtons"></ion-alert>
-        <!-- [ngClass]="{'disabled': this.groupData && this.groupData['closed']}" -->
-        <ion-button id="match-button">
-          Match Members
-        </ion-button>
-        <ion-alert trigger="match-button" class="custom-alert" header="Are you sure?" [buttons]="matchButtons"></ion-alert>
-      </div>
+    <div class = "management-button-div">
+      <ion-button id="disband-button">
+        Disband Group
+      </ion-button>
+      <ion-alert trigger="disband-button" header="Are you sure?" [buttons]="disbandButtons"></ion-alert>
+      <!-- [ngClass]="{'disabled': this.groupData && this.groupData['closed']}" -->
+      <ion-button id="match-button">
+        Match Members
+      </ion-button>
+      <ion-alert trigger="match-button" class="custom-alert" header="Are you sure?" [buttons]="matchButtons"></ion-alert>
     </div>
-  }
+  </div>
+}
+
 
 </ion-content>
 
@@ -137,3 +138,73 @@
 
 <!-- https://img.freepik.com/premium-vector/cute-little-girl-with-christmas-gift-cartoon-illustration_456987-171.jpg?w=740 -->
 <!-- https://img.freepik.com/premium-vector/cute-little-boy-santa-with-gift-icon-element_456987-177.jpg?w=740 -->
+
+<!-- <div class = "all-member-card-div-admin">
+  @for (user of this.userList; track $index) {
+      <ion-item-sliding>
+      <ion-item>
+        <ion-card class="member-card">
+          <div class="image-div">
+            @let pic = user.data['profilePic'];
+            @if (pic === 'boy') {
+              <img
+                src="https://img.freepik.com/premium-vector/cute-little-boy-santa-with-gift-icon-element_456987-177.jpg?w=740"
+                alt="Cute Little Boy"
+              />
+            } @else if (pic === 'girl'){
+              <img
+                src="https://img.freepik.com/premium-vector/cute-little-girl-with-christmas-gift-cartoon-illustration_456987-171.jpg?w=740"
+                alt="Cute Little Girl"
+              />
+            } @else {
+              <img
+                src="https://img.freepik.com/premium-vector/cute-little-boy-santa-with-gift-icon-element_456987-177.jpg?w=740"
+                alt="Cute Little Boy"
+              />
+            }
+          </div>
+          <div class="member-card-header-div">
+            <ion-card-header>
+              <ion-card-title>{{user.data['username']}}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{user.data['bio']}}
+            </ion-card-content>
+            <!-- placeholder. change logic to put this if statement over whatever should only show up if this user is the match -->
+             @if (this.currentMatch && this.currentMatch.id === user.ref.id) {
+              <ion-card-content>my match</ion-card-content>
+             }
+             <!-- placeholder for what should show if this is my card -->
+            @if (this.auth.currentUser && this.auth.currentUser.id === user.ref.id) {
+              <ion-card-content>my card</ion-card-content>
+            }
+          </div>
+        </ion-card>
+      </ion-item>
+         @if (this.groupData && this.groupData['closed'] === false) {
+        <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="removeUser(user.ref)">Delete</ion-item-option>
+      </ion-item-options>
+      </ion-item-sliding>
+  }
+</div>
+
+
+<div class = "admin-nav-bar">
+  <div class = "admin-text">
+    <h2> ADMIN </h2>
+  </div>
+
+  <div class = "management-button-div">
+    <ion-button id="disband-button">
+      Disband Group
+    </ion-button>
+    <ion-alert trigger="disband-button" header="Are you sure?" [buttons]="disbandButtons"></ion-alert>
+    <!-- [ngClass]="{'disabled': this.groupData && this.groupData['closed']}" -->
+    <ion-button id="match-button">
+      Match Members
+    </ion-button>
+    <ion-alert trigger="match-button" class="custom-alert" header="Are you sure?" [buttons]="matchButtons"></ion-alert>
+  </div>
+</div>
+} -->
