@@ -94,6 +94,12 @@
     color: #8B0000;
     margin: 5px;
     font-size:large;
+    font-weight: bold;
+    // border: 2px solid black;
+  }
+
+  .group-card-header-div ion-card-subtitle {
+    font-weight: bold;
     // border: 2px solid black;
   }
 
@@ -122,22 +128,3 @@
 }
 
 
-
-/* Ensure responsiveness */
-// @media (max-width: 600px) {
-//     .header {
-//         flex-direction: column;
-//         align-items: center;
-//     }
-//     .header-right {
-//         margin-top: 8px;
-//     }
-// }
-
-
-// div {
-//     border: solid 1px black;
-// }
-// div:hover {
-//     background-color: lightgray;
-// }

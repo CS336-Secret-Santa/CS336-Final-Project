@@ -1,0 +1,69 @@
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  //start: hoverOverScroll
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  //end: hoverOverScroll
+
+  // border: 2px solid black;
+  // background-color: #FFE5B4;
+  background-color: #fbd3d3;
+  margin-bottom: 7px;
+}
+
+.header h1 {
+  font-family: Candara;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #8B0000;
+  margin-left: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  // border: 2px solid black;
+  // color: #2c3e50;
+}
+
+.all-gift-card-div {
+  margin-top: 2px;
+  // border: 2px solid black;
+}
+
+.gift-card {
+  display: flex;
+  justify-content:center;
+  margin-top: 0px;
+  margin-left: 4px;
+  margin-right: 8px;
+  margin-bottom: 2px;
+  // border: 2px solid black;
+}
+
+.gift-card-header-div {
+  margin: 0px;
+  // border: 2px solid black;
+}
+
+
+.gift-card-header-div ion-card-content {
+  font-weight: bold;
+}
+
+.add-gift-button-div {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  display: flex;
+  justify-content: center;
+  // border: 2px solid black;
+}
+
+.add-gift-button {
+  --background: #8B0000;
+  --color: rgb(255, 248, 248);
+  font-weight: bold;
+
+  // border: 2px solid black;
+}
