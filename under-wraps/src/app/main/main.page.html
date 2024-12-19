@@ -15,6 +15,7 @@
     }
   </div>
 
+
     @if (!this.isAdmin){
       <div class = "all-member-card-div">
         @for (user of this.userList; track $index) {
@@ -103,9 +104,10 @@
               </div>
             </ion-card>
           </ion-item>
-            <ion-item-options side="end">
-              <ion-item-option color="danger">Delete</ion-item-option>
-            </ion-item-options>
+             @if (this.groupData && this.groupData['closed'] === false) {
+          <ion-item-options side="end">
+            <ion-item-option color="danger" (click)="removeUser(user.ref)">Delete</ion-item-option>
+          </ion-item-options>
         </ion-item-sliding>
       }
     </div>
@@ -120,6 +122,7 @@
           Disband Group
         </ion-button>
         <ion-alert trigger="disband-button" header="Are you sure?" [buttons]="disbandButtons"></ion-alert>
+        <!-- [ngClass]="{'disabled': this.groupData && this.groupData['closed']}" -->
         <ion-button id="match-button">
           Match Members
         </ion-button>
