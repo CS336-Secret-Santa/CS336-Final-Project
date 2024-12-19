@@ -68,13 +68,22 @@ h6 {
 }
 
 
-.all-member-card-div {
+.all-member-card-div-admin {
   margin-top: 2px;
   // start - static admin bottom bar
   max-height: 507px;
   overflow-y: auto;
   // end - static admin bottom bar
-  border: 2px solid black;
+  // border: 2px solid black;
+}
+
+.all-member-card-div {
+  margin-top: 2px;
+  // start - static admin bottom bar
+  // max-height: 507px;
+  // overflow-y: auto;
+  // end - static admin bottom bar
+  // border: 2px solid black;
 }
 
 .member-card {
@@ -143,7 +152,7 @@ ion-item-option {
   display: flex;
   justify-content: space-evenly;
   margin-left: 1.5em;
-  border: 2px solid black;
+  // border: 2px solid black;
 }
 
 .admin-text {
