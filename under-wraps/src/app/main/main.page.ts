@@ -20,6 +20,7 @@ export class MainPage implements OnInit {
   groupData: DocumentData | false = false;
   groupRef: DocumentReference | false = false;
   isAdmin: boolean = false;
+  
   userList: {ref: DocumentReference<DocumentData, DocumentData>, data:DocumentData}[] = [];
   currentMatch: DocumentReference | false = false;
   router: Router = inject(Router);

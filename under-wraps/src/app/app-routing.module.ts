@@ -30,8 +30,9 @@ const routes: Routes = [
   {
     path: 'group',
     loadChildren: () => import('./group/group.module').then( m => m.GroupPageModule)
-  },  {
-    path: 'gift',
+  },
+  {
+    path: 'gift/:id',
     loadChildren: () => import('./gift/gift.module').then( m => m.GiftPageModule)
   },
 
