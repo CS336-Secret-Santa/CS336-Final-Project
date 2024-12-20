@@ -14,7 +14,7 @@ export class AuthService {
 
   currentUser: DocumentReference | null = null;
   constructor(private router: Router, private toastController: ToastController) { 
-    this.currentUser = doc(this.firestoreService.firestore, 'Users/4Ubq0C8QQ5aAL7HH2lCv'); // get the current user
+    // this.currentUser = doc(this.firestoreService.firestore, 'Users/4Ubq0C8QQ5aAL7HH2lCv'); // get the current user
   }
 
   // code based on https://firebase.google.com/docs/auth/web/password-auth
