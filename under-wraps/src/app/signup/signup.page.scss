@@ -51,3 +51,25 @@
     font-size: 16px;
     font-weight: bold;
   }
+
+
+  .back-button{
+    margin: 0;
+    padding: 0;
+    // border: 2px solid black;
+    --background: #ede0e0;
+  }
+
+  .back-button img{
+    width: 30px;
+    height: 30px;
+    // object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .back-div {
+    position: absolute; /* Position the div absolutely within the parent */
+    top: 0; /* Align to the top */
+    left: 0; /* Align to the left */
+    padding: 10px;
+  }

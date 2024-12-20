@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -9,6 +10,7 @@ import { AuthService } from '../services/auth.service';
 export class SignupPage implements OnInit {
 
   authService: AuthService = inject(AuthService);
+  router: Router = inject(Router);
 
   username: string = "";
   bio: string = "";
@@ -20,6 +22,7 @@ export class SignupPage implements OnInit {
   ngOnInit() {
     void 0; // do nothing
   }
+
 
   validateSignup() {
     if (this.username === "") {

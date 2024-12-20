@@ -1,4 +1,13 @@
+
+
 <ion-content>
+  <div class = "back-div">
+    <ion-header>
+      <ion-button class = "back-button" size = "small" (click)="this.router.navigate(['/home']);">
+      <img src= "https://thumbs.dreamstime.com/b/send-back-icon-vector-set-white-background-eps-331973597.jpg">
+    </ion-button>
+  </ion-header>
+  </div>
   <div class = "login-card-div">
     <div class = "login-card">
       <div class ="login-content">
@@ -7,7 +16,6 @@
         </ion-text>
         <ion-input label="Email" [(ngModel)]="this.email"></ion-input>
         <ion-input label="Password" type="password" [(ngModel)]="this.password"></ion-input>
-
         <ion-button expand="block" (click)="authService.login(this.email, this.password)">Login</ion-button>
       </div>
       </div>

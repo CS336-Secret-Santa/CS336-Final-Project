@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,6 +10,7 @@ import { AuthService } from '../services/auth.service';
 export class LoginPage implements OnInit {
 
   authService: AuthService = inject(AuthService);
+  router: Router = inject(Router);
 
   email: string = "";
   password: string = "";
