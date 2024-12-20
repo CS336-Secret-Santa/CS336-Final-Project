@@ -635,7 +635,7 @@ export class FirestoreService {
       return match;
     }
     catch (e) {
-      console.error(e);
+      console.error(e, "No match found -- this error may be intentional if no match has been set.");
       return false;
     }
   }

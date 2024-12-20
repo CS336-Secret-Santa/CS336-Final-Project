@@ -40,12 +40,12 @@
   margin-right: 8px;
   margin-bottom: 2px;
   // border: 2px solid black;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+  color: #8B0000;
+  font-weight: bold
 }
 
-.gift-card-header-div {
-  margin: 0px;
-  // border: 2px solid black;
-}
+
 
 
 .gift-card-header-div ion-card-content {
@@ -53,8 +53,12 @@
 }
 
 .add-gift-button-div {
-  margin-top: 4px;
-  margin-bottom: 4px;
+  margin-top: 0px;
+  margin-left: 4px;
+  margin-right: 8px;
+  margin-bottom: 2px;
+  // margin-top: 4px;
+  // margin-bottom: 4px;
   display: flex;
   justify-content: center;
   // border: 2px solid black;
@@ -63,7 +67,16 @@
 .add-gift-button {
   --background: #8B0000;
   --color: rgb(255, 248, 248);
-  font-weight: bold;
+  font-weight: bolder;
 
   // border: 2px solid black;
+}
+
+.add-gift-input{
+  --padding-start: 8px;
+    border: 1px solid #9b9b9b;
+    border-radius: 8px;
+    color: #888888;
+    font-weight: bold
+    // --placeholder-color: #888888;
 }

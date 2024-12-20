@@ -4,19 +4,20 @@
 </div>
 
 <div class = "all-gift-card-div">
+  @if (this.currentUser && this.auth.currentUser && this.currentUser.id === this.auth.currentUser.id) {
+    <div class = "add-gift-button-div">
+      <ion-input class = "add-gift-input" label="Gift wish: " [(ngModel)]="this.giftInput"></ion-input>
+      <ion-button class = "add-gift-button" size="small" (click)="this.addGift()">
+        Add Gift Wish
+      </ion-button>
+    </div>
+  }
+  @for (gift of this.giftList; track $index) {
   <ion-card class="gift-card">
-    <div class="gift-card-header-div">
-      <div class = "add-gift-button-div">
-        <ion-button class = "add-gift-button">
-          Add Gift Wish
-        </ion-button>
-      </div>
-
       <ion-card-content>
-        Stanley Cup
+        {{gift['preference']}}
       </ion-card-content>
-      </div>
-
   </ion-card>
+  }
 </div>
 </ion-content>

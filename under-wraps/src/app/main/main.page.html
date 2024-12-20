@@ -15,12 +15,14 @@
     }
   </div>
 
-  <!-- TODO -->
-  <!-- (click)="this.router.navigate(['/gift']);" -->
     @if (!this.isAdmin){
       <div class = "all-member-card-div">
         @for (user of this.userList; track $index) {
-              <ion-card class="member-card">
+          <!-- make this clickable if it is my card or my match's card -->
+              <ion-card class="member-card" 
+              (click)="((this.currentMatch && this.currentMatch.id === user.ref.id) 
+              || (this.auth.currentUser && this.auth.currentUser.id === user.ref.id)) 
+              && this.router.navigate(['/gift', user.ref.id])">
                 <div class="image-div">
                   @let pic = user.data['profilePic'];
                   @if (pic === 'boy') {
@@ -65,7 +67,7 @@
   <div class = "all-member-card-div-admin">
     @for (user of this.userList; track $index) {
       <ion-item-sliding>
-        <ion-item>
+        <ion-item (click)="this.router.navigate(['/gift', user.ref.id])">
           <ion-card class="member-card">
             <div class="image-div">
               @let pic = user.data['profilePic'];
