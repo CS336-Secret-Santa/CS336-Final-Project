@@ -2,8 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { collection, query, collectionData, DocumentData, DocumentReference, where  } from '@angular/fire/firestore';
 import { FirestoreService } from '../services/firestore.service';
 import { AuthService } from '../services/auth.service';
-// import { Observable, EMPTY } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-group',
@@ -15,20 +14,16 @@ export class GroupPage implements OnInit {
   auth: AuthService = inject(AuthService);
   router: Router = inject(Router);
 
-  // groups$: Observable<DocumentData[]>;
   groupList: {ref: DocumentReference<DocumentData, DocumentData>, data:DocumentData}[] = [];
   currentUser = this.auth.currentUser;
 
   constructor() { 
-    // if (this.currentUser) {
-      
-    //   const groupQuery = query(collection(this.currentUser, 'Groups'));
-    //   this.groups$ = collectionData<DocumentData>(groupQuery);
-    // }
-    // else {
-    //   console.log("No user logged in.");
-    //   this.groups$ = EMPTY; // empty observable since no current user was found
-    // }
+    // whenever the page is navigated to, update the group list
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.getGroups();
+      }
+    });
   }
 
   /**
@@ -65,7 +60,8 @@ export class GroupPage implements OnInit {
   }
 
   ngOnInit() {
-    this.getGroups();
+    // this.getGroups();
+    void 0;
   }
 
 }
