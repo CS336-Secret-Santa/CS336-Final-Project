@@ -9,6 +9,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { HomePage } from './home/home.page';
+import { LoginPage } from './login/login.page';
+import { GroupPage } from './group/group.page';
 
 @NgModule({
   declarations: [AppComponent],

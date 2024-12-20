@@ -17,7 +17,7 @@ export class GroupPage implements OnInit {
   groupList: {ref: DocumentReference<DocumentData, DocumentData>, data:DocumentData}[] = [];
   currentUser = this.auth.currentUser;
 
-  constructor() { 
+  constructor() {
     // whenever the page is navigated to, update the group list
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -44,14 +44,14 @@ export class GroupPage implements OnInit {
           return false;
         });
         // resolve promises to return either document data or false,
-        // then filter out the false values 
+        // then filter out the false values
         const filteredData = (await Promise.all(queryRes)).filter((doc) => {
           return doc !== false;
         });
         // For some reason, even after the filter, typescript was still uncertain about whether filteredData contained objects or "false" values.
         // Type assertion used to circumvent this issue
         this.groupList = filteredData as {ref: DocumentReference<DocumentData, DocumentData>, data: DocumentData}[];
-      }   
+      }
     }
     else {
       console.log("No user logged in.");

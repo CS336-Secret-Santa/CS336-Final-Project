@@ -224,3 +224,26 @@ ion-item-option {
 }
 
 
+.back-button{
+  margin: 0;
+  padding: 0;
+  // border: 2px solid black;
+  --background: #fbd3d3;
+}
+
+.back-button img{
+  width: 30px;
+  height: 30px;
+  // object-fit: cover;
+  border-radius: 50%;
+}
+
+.back-div {
+  position: absolute; /* Position the div absolutely within the parent */
+  top: 0; /* Align to the top */
+  right: 0; /* Align to the left */
+  background-color: #fbd3d3;
+  padding: 0px;
+  margin: 0px;
+  // border: 2px solid black;
+}
