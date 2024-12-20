@@ -127,8 +127,9 @@ export class MainPage implements OnInit {
   }
 
   refreshPage() {
-    this.getUsers();
+    this.getUsers().then(() => {
     this.getMatch();
+    });
   }
 
   constructor(private route: ActivatedRoute) { 
@@ -145,6 +146,14 @@ export class MainPage implements OnInit {
 
   ngOnInit() {
     void 0;
+  }
+
+  leaveGroup() {
+    console.log('Leaving group...');
+    if (this.groupRef && this.auth.currentUser) {
+      this.firestore.unlinkGroupandUser(this.groupRef, this.auth.currentUser);
+      this.router.navigate(['/group']);
+    }
   }
 
   /**
