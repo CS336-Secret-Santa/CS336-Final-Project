@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { collection, query, collectionData, DocumentData, DocumentReference, where  } from '@angular/fire/firestore';
+import { collection, query, collectionData, DocumentData, DocumentReference, where, getDocs } from '@angular/fire/firestore';
 import { FirestoreService } from '../services/firestore.service';
 import { AuthService } from '../services/auth.service';
 import { Router, NavigationEnd } from '@angular/router';
@@ -21,10 +21,22 @@ export class GroupPage implements OnInit {
     // whenever the page is navigated to, update the group list
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
+        console.log("Navigated to group page.");
         this.getGroups();
       }
     });
   }
+
+  // We wanted to display the number of members in each group on the cards, but ran out of time to debug this method
+  // async getGroupSize(group: DocumentReference<DocumentData, DocumentData>) {
+  //   const groupData = await this.firestore.convertRefToDocData(group);
+  //   if (groupData) {
+  //     const docs = await getDocs(groupData['members']);
+  //     return docs.size;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
   /**
    * Update this.groupList to contain all the groups that the current user is a part of.

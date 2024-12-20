@@ -10,7 +10,7 @@
     @if (!this.isAdmin) {
       <div class = "header-right">
         <!-- TO-DO: Button onclick color is default ios blue right now. Look into changing it. -->
-        <ion-button class = "leavegroup-button" size = "small" (click)="this.router.navigate(['/group']);"> Leave Group </ion-button>
+        <ion-button class = "leavegroup-button" size = "small" (click)="this.leaveGroup()"> Leave Group </ion-button>
       </div>
     }
   </div>
@@ -44,18 +44,21 @@
                 </div>
                 <div class="member-card-header-div">
                   <ion-card-header>
-                    <ion-card-title>{{user.data['username']}}</ion-card-title>
-                    @if (this.currentMatch && this.currentMatch.id === user.ref.id) {
-                      <div class = "giftee-icon">
-                      <ion-icon name = "gift"></ion-icon>
-                      <ion-badge color="red">Giftee</ion-badge>
-                    </div>
-                     }
-                     @if (this.auth.currentUser && this.auth.currentUser.id === user.ref.id) {
-                      <div class = "self-icon">
-                        <ion-icon name = "person"></ion-icon>
+                    <ion-card-title>
+                      {{user.data['username']}}
+                    </ion-card-title>
+                      @if (this.currentMatch && this.currentMatch.id === user.ref.id) {
+                      
+                        <div class = "giftee-icon">
+                        <ion-icon name = "gift"></ion-icon>
+                        <ion-badge color="red">Giftee</ion-badge>
                       </div>
-                    }
+                       }
+                       @if (this.auth.currentUser && this.auth.currentUser.id === user.ref.id) {
+                        <div class = "self-icon">
+                          <ion-icon name = "person"></ion-icon>
+                        </div>
+                      }
                   </ion-card-header>
                   <ion-card-content>
                     {{user.data['bio']}}
@@ -135,8 +138,7 @@
         Disband Group
       </ion-button>
       <ion-alert trigger="disband-button" header="Are you sure?" [buttons]="disbandButtons"></ion-alert>
-      <!-- [ngClass]="{'disabled': this.groupData && this.groupData['closed']}" -->
-      <ion-button id="match-button">
+      <ion-button id="match-button" [disabled]="this.groupData && this.groupData['closed']">
         Match Members
       </ion-button>
       <ion-alert trigger="match-button" class="custom-alert" header="Are you sure?" [buttons]="matchButtons"></ion-alert>
