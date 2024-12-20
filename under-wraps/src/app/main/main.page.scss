@@ -71,11 +71,13 @@ h6 {
 .all-member-card-div-admin {
   margin-top: 2px;
   // start - static admin bottom bar
-  max-height: 507px;
+  // max-height: 507px;
+  max-height: 76%;
   overflow-y: auto;
   // end - static admin bottom bar
   // border: 2px solid black;
 }
+
 
 .all-member-card-div {
   margin-top: 2px;
@@ -88,54 +90,62 @@ h6 {
 
 .member-card {
   display: flex;
-  justify-content:center;
+  // justify-content:center;
   margin-top: 0px;
   margin-left: 4px;
   margin-right: 8px;
   margin-bottom: 2px;
+  width: 100%;
   // border: 2px solid black;
 }
 
 .image-div {
   // border: 2px solid black;
   margin: 8px;
-  width: 140px;
+  min-width: 80px;
+  max-width: 80px;
   display: flex;
-  justify-content: center;
+  // justify-content: flex-start;
   align-items: center;
 }
 
 .member-card img {
-  width: 60x;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   object-fit: cover; /* Ensure the image fits nicely */
   border-radius: 50%;
   // border: 2px solid black;
 }
 
 .member-card-header-div {
-  margin: 0px;
+  margin:auto;
+  // min-width: 235px;
   // border: 2px solid black;
 }
 
 .member-card-header-div ion-card-header {
   padding: 0px;
+  // min-width: 180px;
   // border: 2px solid black;
   margin-right: 2px;
 }
 
 .member-card-header-div ion-card-title {
   margin: 5px;
+  margin-top: 10px;
   color: #8B0000;
   font-size:large;
   align-self: center;
+  font-weight: bold;
   // border: 2px solid black;
 }
 
 .member-card-header-div ion-card-content {
-  margin: 0px;
+  margin: 8px;
   padding: 0px;
   font-size: small;
+  text-align: center;
+  // font-weight: bold;
   // border: 2px solid black;
 }
 
@@ -150,9 +160,11 @@ ion-item-option {
   bottom: 0;
   // left: 0;
   display: flex;
-  justify-content: space-evenly;
-  margin-left: 1.5em;
+  justify-content:space-evenly;
+  // margin-left: 1.5em;
   // border: 2px solid black;
+  // box-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+  width: 100%;
 }
 
 .admin-text {
@@ -176,8 +188,9 @@ ion-item-option {
 
 #disband-button {
   --background: #8B0000;
-  --color: rgb(255, 248, 248);
+  --color: rgb(254, 234, 234);
   font-size: 16px;
+  font-weight: bold;
   width: 100px;
   height: 50px;
   margin-right: 10px;
@@ -186,8 +199,9 @@ ion-item-option {
 
 #match-button {
   --background: #8B0000;
-  --color: rgb(255, 248, 248);
+  --color: rgb(254, 234, 234);
   font-size: 16px;
+  font-weight: bold;
   width: 100px;
   height: 50px;
   // border: 2px solid black;
