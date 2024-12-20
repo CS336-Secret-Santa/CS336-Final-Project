@@ -1,6 +1,6 @@
 
 import { Component, inject, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { DocumentReference, DocumentData, getDocs } from '@angular/fire/firestore';
 import { FirestoreService } from '../services/firestore.service';
 import { collection, QuerySnapshot } from 'firebase/firestore';
@@ -94,6 +94,7 @@ export class MainPage implements OnInit {
       }
       // close the group since it has been matched
       this.firestore.setGroupClosed(this.groupRef, true);
+      this.refreshPage();
     } else {
       console.log("No group found.");
     }
@@ -120,17 +121,29 @@ export class MainPage implements OnInit {
   removeUser(userRef: DocumentReference) {
     if (this.groupRef) {
       this.firestore.unlinkGroupandUser(this.groupRef, userRef);
+      this.refreshPage();
     }
   }
 
-  constructor(private route: ActivatedRoute) { }
+  refreshPage() {
+    this.getUsers();
+    this.getMatch();
+  }
 
-  ngOnInit() {
+  constructor(private route: ActivatedRoute) { 
     this.route.params.subscribe(params => {
       this.groupCode = params['code'];
     });
-    this.getUsers();
-    this.getMatch();
+    // whenever a user routes to this page, update the user list
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.refreshPage();
+      }
+    });
+  }
+
+  ngOnInit() {
+    void 0;
   }
 
   /**
